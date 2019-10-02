@@ -2,374 +2,258 @@
 <!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot
-  name="asc_description">
-  <link
-    name="base_link">
+<robot name="asc_description">
+  <link name="base_link">
     <inertial>
-      <origin
-        xyz="-0.191135074026536 0.00147037627768998 -0.144166350352701"
-        rpy="0 0 0" />
-      <mass
-        value="54.6845003989778" />
-      <inertia
-        ixx="0.830289508168532"
-        ixy="-7.44170925374484E-07"
-        ixz="-0.168031775231281"
-        iyy="1.89493024064907"
-        iyz="3.6787232173372E-07"
-        izz="1.80540947379668" />
+      <origin xyz="-0.191135074026536 0.00147037627768998 -0.144166350352701" rpy="0 0 0"/>
+      <mass value="54.6845003989778"/>
+      <inertia ixx="0.830289508168532" ixy="-7.44170925374484E-07" ixz="-0.168031775231281" iyy="1.89493024064907" iyz="3.6787232173372E-07" izz="1.80540947379668"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/base_link.STL" />
+        <mesh filename="package://asc_description/meshes/base_link.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.866666666666667 0.866666666666667 0.890196078431372 1" />
+      <material name="">
+        <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/base_link.STL" />
+        <mesh filename="package://asc_description/meshes/base_link.STL"/>
       </geometry>
     </collision>
   </link>
-  <link
-    name="left_front_steering_link">
+  <link name="left_front_steering_link">
     <inertial>
-      <origin
-        xyz="-0.0439194980427094 -0.0123148656628935 -0.29574701698731"
-        rpy="0 0 0" />
-      <mass
-        value="5.71439015182903" />
-      <inertia
-        ixx="0.138973038944984"
-        ixy="0.00240438901312515"
-        ixz="0.0320681563279578"
-        iyy="0.160053837434921"
-        iyz="-0.0109556260035955"
-        izz="0.028546837728721" />
+      <origin xyz="-0.0439194980427094 -0.0123148656628935 -0.29574701698731" rpy="0 0 0"/>
+      <mass value="5.71439015182903"/>
+      <inertia ixx="0.138973038944984" ixy="0.00240438901312515" ixz="0.0320681563279578" iyy="0.160053837434921" iyz="-0.0109556260035955" izz="0.028546837728721"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_front_steering_link.STL" />
+        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_front_steering_link.STL" />
+        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="left_front_steering_joint"
-    type="revolute">
-    <origin
-      xyz="0.9825 0.63618 0.047063"
-      rpy="0.13336 -0.28845 0.0036248" />
-    <parent
-      link="base_link" />
-    <child
-      link="left_front_steering_link" />
-    <axis
-      xyz="0 0 1" />
-    <limit
-      lower="-1.57"
-      upper="1.57"
-      effort="0"
-      velocity="0" />
+  <joint name="left_front_steering_joint" type="revolute">
+    <origin xyz="0.9825 0.63618 0.047063" rpy="0.13546 -0.28749 0.0037802"/>
+    <parent link="base_link"/>
+    <child link="left_front_steering_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
   </joint>
-  <link
-    name="left_front_wheel_link">
+  <link name="left_front_wheel_link">
     <inertial>
-      <origin
-        xyz="-2.26485497023532E-14 4.10782519111308E-14 0.00509989314954018"
-        rpy="0 0 0" />
-      <mass
-        value="3.6905479088754" />
-      <inertia
-        ixx="0.117114266308146"
-        ixy="-6.93889390390723E-18"
-        ixz="1.02756637900478E-17"
-        iyy="0.117114266308146"
-        iyz="-3.62378420062206E-17"
-        izz="0.227951064044091" />
+      <origin xyz="-2.26485497023532E-14 4.10782519111308E-14 0.00509989314954018" rpy="0 0 0"/>
+      <mass value="3.6905479088754"/>
+      <inertia ixx="0.117114266308146" ixy="-6.93889390390723E-18" ixz="1.02756637900478E-17" iyy="0.117114266308146" iyz="-3.62378420062206E-17" izz="0.227951064044091"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_front_wheel_link.STL" />
+        <mesh filename="package://asc_description/meshes/left_front_wheel_link.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0 0 0 1" />
+      <material name="">
+        <color rgba="0 0 0 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_front_wheel_link.STL" />
+        <mesh filename="package://asc_description/meshes/left_front_wheel_link.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="left_front_wheel_joint"
-    type="continuous">
-    <origin
-      xyz="0.065693 0.065054 -0.50813"
-      rpy="-1.8471 1.0585 -0.24589" />
-    <parent
-      link="left_front_steering_link" />
-    <child
-      link="left_front_wheel_link" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="left_front_wheel_joint" type="continuous">
+    <origin xyz="0.065693 0.065054 -0.50813" rpy="-1.8471 1.0585 -0.24589"/>
+    <parent link="left_front_steering_link"/>
+    <child link="left_front_wheel_link"/>
+    <axis xyz="0 0 1"/>
   </joint>
-  <link
-    name="right_front_steering_link">
+  <link name="right_front_steering_link">
     <inertial>
-      <origin
-        xyz="-0.0465182122250822 0.0145095544427134 -0.290619703564971"
-        rpy="0 0 0" />
-      <mass
-        value="5.57746367002881" />
-      <inertia
-        ixx="0.138857493635095"
-        ixy="-0.0022557465179349"
-        ixz="0.032139397456901"
-        iyy="0.160001336296301"
-        iyz="0.0107272499121531"
-        izz="0.0284811002523076" />
+      <origin xyz="-0.0465182122250822 0.0145095544427134 -0.290619703564971" rpy="0 0 0"/>
+      <mass value="5.57746367002881"/>
+      <inertia ixx="0.138857493635095" ixy="-0.0022557465179349" ixz="0.032139397456901" iyy="0.160001336296301" iyz="0.0107272499121531" izz="0.0284811002523076"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_front_steering_link.STL" />
+        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_front_steering_link.STL" />
+        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="right_front_steering_joint"
-    type="revolute">
-    <origin
-      xyz="0.9825 -0.63318 0.047063"
-      rpy="-0.13546 -0.28749 0.0037802" />
-    <parent
-      link="base_link" />
-    <child
-      link="right_front_steering_link" />
-    <axis
-      xyz="0 0 1" />
-    <limit
-      lower="-1.57"
-      upper="1.57"
-      effort="0"
-      velocity="0" />
+  <joint name="right_front_steering_joint" type="revolute">
+    <origin xyz="0.9825 -0.63318 0.047063" rpy="-0.13546 -0.28749 0.0037802"/>
+    <parent link="base_link"/>
+    <child link="right_front_steering_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="0" velocity="0"/>
   </joint>
-  <link
-    name="right_front_wheel_link">
+  <link name="right_front_wheel_link">
     <inertial>
-      <origin
-        xyz="-1.02140518265514E-14 6.85007606193722E-14 0.00509989314946457"
-        rpy="0 0 0" />
-      <mass
-        value="3.69054790887537" />
-      <inertia
-        ixx="0.117114266308143"
-        ixy="1.38777878078145E-17"
-        ixz="2.37549730750149E-18"
-        iyy="0.117114266308143"
-        iyz="3.40770700491441E-17"
-        izz="0.22795106404409" />
+      <origin xyz="-1.02140518265514E-14 6.85007606193722E-14 0.00509989314946457" rpy="0 0 0"/>
+      <mass value="3.69054790887537"/>
+      <inertia ixx="0.117114266308143" ixy="1.38777878078145E-17" ixz="2.37549730750149E-18" iyy="0.117114266308143" iyz="3.40770700491441E-17" izz="0.22795106404409"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_front_wheel_link.STL" />
+        <mesh filename="package://asc_description/meshes/right_front_wheel_link.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0 0 0 1" />
+      <material name="">
+        <color rgba="0 0 0 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_front_wheel_link.STL" />
+        <mesh filename="package://asc_description/meshes/right_front_wheel_link.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="right_front_wheel_link"
-    type="continuous">
-    <origin
-      xyz="0.065291 -0.059582 -0.50741"
-      rpy="1.8455 1.0552 0.23683" />
-    <parent
-      link="right_front_steering_link" />
-    <child
-      link="right_front_wheel_link" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="right_front_wheel_link" type="continuous">
+    <origin xyz="0.065291 -0.059582 -0.50741" rpy="1.8455 1.0552 0.23683"/>
+    <parent link="right_front_steering_link"/>
+    <child link="right_front_wheel_link"/>
+    <axis xyz="0 0 1"/>
   </joint>
-  <link
-    name="left_rear_wheel">
+  <link name="left_rear_wheel">
     <inertial>
-      <origin
-        xyz="8.43769498715119E-15 0.0589722640664191 -5.01820807130571E-14"
-        rpy="0 0 0" />
-      <mass
-        value="3.68939811577995" />
-      <inertia
-        ixx="0.117113236563891"
-        ixy="-4.42261767048626E-17"
-        ixz="-6.93889390390723E-18"
-        iyy="0.227950884881602"
-        iyz="-3.11187820789416E-16"
-        izz="0.117113236563891" />
+      <origin xyz="8.43769498715119E-15 0.0589722640664191 -5.01820807130571E-14" rpy="0 0 0"/>
+      <mass value="3.68939811577995"/>
+      <inertia ixx="0.117113236563891" ixy="-4.42261767048626E-17" ixz="-6.93889390390723E-18" iyy="0.227950884881602" iyz="-3.11187820789416E-16" izz="0.117113236563891"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_rear_wheel.STL" />
+        <mesh filename="package://asc_description/meshes/left_rear_wheel.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/left_rear_wheel.STL" />
+        <mesh filename="package://asc_description/meshes/left_rear_wheel.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="left_rear_wheel"
-    type="continuous">
-    <origin
-      xyz="-1.3237 0.70906 -0.41261"
-      rpy="3.1416 0.12841 3.1416" />
-    <parent
-      link="base_link" />
-    <child
-      link="left_rear_wheel" />
-    <axis
-      xyz="0 1 0" />
+  <joint name="left_rear_wheel_joint" type="continuous">
+    <origin xyz="-1.3237 0.70906 -0.41261" rpy="3.1416 0.12841 3.1416"/>
+    <parent link="base_link"/>
+    <child link="left_rear_wheel"/>
+    <axis xyz="0 1 0"/>
   </joint>
-  <link
-    name="right_rear_wheel">
+  <link name="right_rear_wheel">
     <inertial>
-      <origin
-        xyz="7.99360577730113E-15 0.0589722640664192 4.2410519540681E-14"
-        rpy="0 0 0" />
-      <mass
-        value="3.68939811577991" />
-      <inertia
-        ixx="0.117113236563893"
-        ixy="-4.66966016159301E-17"
-        ixz="4.33680868994202E-18"
-        iyy="0.2279508848816"
-        iyz="3.34438350256477E-16"
-        izz="0.117113236563893" />
+      <origin xyz="7.99360577730113E-15 0.0589722640664192 4.2410519540681E-14" rpy="0 0 0"/>
+      <mass value="3.68939811577991"/>
+      <inertia ixx="0.117113236563893" ixy="-4.66966016159301E-17" ixz="4.33680868994202E-18" iyy="0.2279508848816" iyz="3.34438350256477E-16" izz="0.117113236563893"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_rear_wheel.STL" />
+        <mesh filename="package://asc_description/meshes/right_rear_wheel.STL"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 1 1 0.32" />
+      <material name="">
+        <color rgba="1 1 1 0.32"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://asc_description/meshes/right_rear_wheel.STL" />
+        <mesh filename="package://asc_description/meshes/right_rear_wheel.STL"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="right_rear_wheel"
-    type="continuous">
-    <origin
-      xyz="-1.3237 -0.70606 -0.41261"
-      rpy="0 0.12841 3.1416" />
-    <parent
-      link="base_link" />
-    <child
-      link="right_rear_wheel" />
-    <axis
-      xyz="0 1 0" />
+  <joint name="right_rear_wheel" type="continuous">
+    <origin xyz="-1.3237 -0.70606 -0.41261" rpy="0 0.12841 3.1416"/>
+    <parent link="base_link"/>
+    <child link="right_rear_wheel"/>
+    <axis xyz="0 1 0"/>
   </joint>
+  <!-- Joints for ackermann steering -->
+  <link name="front_steer_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://asc_description/meshes/right_rear_wheel.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="rear_steer_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://asc_description/meshes/right_rear_wheel.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="front_steer_joint" type="fixed">
+    <origin xyz="1.186 0 -0.409" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_steer_link"/>
+  </joint>
+  <joint name="rear_wheel_joint" type="fixed">
+    <origin xyz="-1.3237 0 -0.41261" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="rear_steer_link"/>
+  </joint>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_left_rear_wheel">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_right_rear_wheel">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Gazebo plugin for ROS Control -->
+  <!--
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo> -->
 </robot>
+
