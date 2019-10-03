@@ -3,6 +3,14 @@
      Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot name="asc_description">
+ 
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/asc</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo> 
+
   <link name="base_link">
     <inertial>
       <origin xyz="-0.191135074026536 0.00147037627768998 -0.144166350352701" rpy="0 0 0"/>
@@ -167,6 +175,17 @@
     <child link="left_rear_wheel"/>
     <axis xyz="0 1 0"/>
   </joint>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_rear_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission> 
+  <!-- Links for ackermann steering plugin -->
   <link name="right_rear_wheel">
     <inertial>
       <origin xyz="7.99360577730113E-15 0.0589722640664192 4.2410519540681E-14" rpy="0 0 0"/>
@@ -189,13 +208,25 @@
       </geometry>
     </collision>
   </link>
-  <joint name="right_rear_wheel" type="continuous">
+  <joint name="right_rear_wheel_joint" type="continuous">
     <origin xyz="-1.3237 -0.70606 -0.41261" rpy="0 0.12841 3.1416"/>
     <parent link="base_link"/>
     <child link="right_rear_wheel"/>
     <axis xyz="0 1 0"/>
   </joint>
+ 
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_rear_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission> 
   <!-- Joints for ackermann steering -->
+  <!--
   <link name="front_steer_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -227,27 +258,7 @@
     <origin xyz="-1.3237 0 -0.41261" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="rear_steer_link"/>
-  </joint>
-  <transmission name="tran1">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="base_to_left_rear_wheel">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor1">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran2">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="base_to_right_rear_wheel">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor2">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
+  </joint> -->
   <!-- Gazebo plugin for ROS Control -->
   <!--
   <gazebo>
