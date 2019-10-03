@@ -3,7 +3,11 @@
   <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
   <node name="tf_footprint_base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link base_footprint 40"/>
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-file $(find asc_description)/urdf/asc_description.urdf -urdf -model asc_description" output="screen"/>
-<!--  
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find unicorn_description)/urdf/unicorn_cam.urdf.xacro'"/>
+  <!--
+   <param name="robot_description" textfile="$(find asc_description)/urdf/asc_description.urdf"/>
+   -->
+  <!--  
 <param name="robot_description" command="$(find xacro)/xacro -+-inorder '$(find asc_description)/urdf/rrbot.xacro'"/> 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
   </node>-->

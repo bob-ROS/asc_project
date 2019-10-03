@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find urdf_tutorial)/launch/display.launch">
+    <arg name="model" value="$(find asc_description)/urdf/asc.urdf.xacro"/>
+  </include>
+</launch>
+
