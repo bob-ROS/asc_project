@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<!-- THIS URDF IS DEPRECATED-->
 <robot name="asc">
-  <gazebo>
+  <gazebo> 
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/asc</robotNamespace>
       <!--<robotParam>/robot_description</robotParam> -->
