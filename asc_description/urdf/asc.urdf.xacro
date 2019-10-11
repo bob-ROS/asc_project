@@ -2,17 +2,16 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asc">
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/asc</robotNamespace>
+      <robotNamespace>/</robotNamespace>
       <!--<robotParam>/robot_description</robotParam> -->
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>
   <link name="base_link"/>
   <joint name="base_link_to_frame" type="fixed">
-    <origin xyz="0 0 1" rpy="0 0 0"/>
+    <origin xyz="0 0 0.7" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="frame_link"/>
-    <axis xyz="0 0 1"/>
   </joint>
   <link name="frame_link">
     <inertial>
@@ -309,8 +308,8 @@
   </transmission>
 <!-- Sensors -->
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <VLP-16 parent="frame_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
-    <origin xyz="0 0 0.5" rpy="0 0 0" />
+  <VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
+    <origin xyz="-0.45 0 1.15" rpy="0 0 0" />
   </VLP-16>
 </robot>
 

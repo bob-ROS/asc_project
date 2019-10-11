@@ -1,4 +1,4 @@
-asc:
+/:
  asc_state_controller:
    type: "joint_state_controller/JointStateController"
    publish_rate: 50  
@@ -14,10 +14,10 @@ asc:
    cmd_vel_timeout: 25.0 # not tested here
  
    # Base frame_id
-   base_frame_id: frame_link
+   base_frame_id: base_link
  
    # Odometry fused with IMU is published by robot_localization, so
    # no need to publish a TF based on encoders alone.
-   enable_odom_tf: true
+   enable_odom_tf: false
  
 
