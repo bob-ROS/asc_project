@@ -24,6 +24,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
 )ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
+  <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <arg name="no_static_map" default="false"/>
   <arg name="base_global_planner" default="global_planner/GlobalPlanner"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
@@ -31,8 +32,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
- <!--<rosparam file="$(find asc_navigation)/config/planner.yaml" command="load"/> -->
-       <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/teb_local_planner_params.yaml" command="load"/> 
+    <!--<rosparam file="$(find asc_navigation)/config/planner.yaml" command="load"/> -->
+    <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/teb_local_planner_params.yaml" command="load"/>
     <!-- observation sources located in costmap_common.yaml -->
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
