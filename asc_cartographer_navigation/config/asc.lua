@@ -27,10 +27,10 @@ options = {
   use_odometry = true,
   use_nav_sat = false,
   use_landmarks = false,
-  num_laser_scans = 1,
+  num_laser_scans = 0,
   num_multi_echo_laser_scans = 0,
   num_subdivisions_per_laser_scan = 1,
-  num_point_clouds = 0,
+  num_point_clouds = 1,
   lookup_transform_timeout_sec = 1.,
   submap_publish_period_sec = 0.3,
   pose_publish_period_sec = 5e-3,
@@ -45,7 +45,8 @@ options = {
 MAP_BUILDER.use_trajectory_builder_2d = true
 
 TRAJECTORY_BUILDER_2D.num_accumulated_range_data = 1
-
+TRAJECTORY_BUILDER_2D.min_z = 0.1
+TRAJECTORY_BUILDER_2D.max_z = 1.5
 TRAJECTORY_BUILDER_2D.min_range = 0.3
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 2.
 TRAJECTORY_BUILDER_2D.use_imu_data = true

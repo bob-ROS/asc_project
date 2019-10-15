@@ -2,8 +2,8 @@ global_frame: map
 static_map: true
 rolling_window: false
 track_unknown_space: true
-width: 20.0
-height: 20.0
+width: 2000.0
+height: 2000.0
 plugins:
   - {name: static,                  type: "costmap_2d::StaticLayer"}
   - {name: inflation,               type: "costmap_2d::InflationLayer"}
