@@ -48,7 +48,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <param name="clearing_rotation_allowed" value="false"/>
     <!-- static global costmap, static map provides size -->
     <rosparam file="$(find asc_navigation)/config/costmap_global_static.yaml" command="load" ns="global_costmap"/>
-    <remap from="cmd_vel" to="four_wheel_steering_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="four_wheel_carlike_steering_controller/cmd_vel"/>
   </node>
 </launch>
 
