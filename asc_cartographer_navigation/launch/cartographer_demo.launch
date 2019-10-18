@@ -23,7 +23,7 @@
           -configuration_basename asc.lua"
       output="screen">
     <remap from="imu" to="imu/data" />
-    <remap from="odom" to="odom_perfect" />
+    <remap from="odom" to="odometry/filtered" />
     <remap from="points2" to="velodyne_points" />
   </node>
 

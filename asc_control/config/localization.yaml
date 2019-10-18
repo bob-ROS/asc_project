@@ -5,8 +5,13 @@ world_frame: odom
 two_d_mode: true
 
 frequency: 50
+#(X,Y,Z,
+#roll,pitch,yaw,
+#X˙,Y˙,Z˙,
+#roll˙,pitch˙,yaw˙,
+#X¨,Y¨,Z¨)
 
-odom0: /four_wheel_steering_controller/odom
+odom0: four_wheel_carlike_steering_controller/odom
 odom0_config: [false, false, false,
                false, false, false,
                true, true, true,
@@ -21,6 +26,7 @@ imu0_config: [false, false, false,
               false, false, false,
               true, true, true,
               false, false, false]
-imu0_differential: true
+imu0_differential: false
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: true
+

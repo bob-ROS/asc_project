@@ -5,6 +5,7 @@
       <robotNamespace>/</robotNamespace>
       <!--<robotParam>/robot_description</robotParam> -->
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>false</legacyModeNS>
     </plugin>
   </gazebo>
   <link name="base_link"/>
@@ -313,23 +314,54 @@
       <updateRate>50.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>imu/data</topicName>
+      <accelDrift>0.00 0.00 0.00</accelDrift>
+      <accelGaussianNoise>0.00 0.00 0.00</accelGaussianNoise>
+      <rateDrift>0.0 0.000.0 </rateDrift>
+      <rateGaussianNoise>0.00 0.005 0.00 </rateGaussianNoise>
+      <headingDrift>0.00</headingDrift>
+      <headingGaussianNoise>0.00</headingGaussianNoise>
+      <!--
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
       <rateDrift>0.005 0.005 0.005 </rateDrift>
       <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
       <headingDrift>0.005</headingDrift>
-      <headingGaussianNoise>0.005</headingGaussianNoise>
+      <headingGaussianNoise>0.005</headingGaussianNoise> -->
     </plugin>
     <!-- for calculating perfect odometry -->
+    <!--
     <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
       <alwaysOn>true</alwaysOn>
-      <updateRate>50.0</updateRate>
+      <updateRate>1.0</updateRate>
       <bodyName>base_link</bodyName>
-      <topicName>odom_perfect</topicName>
+      <topicName>odom_perfect_world</topicName>
       <gaussianNoise>0.0</gaussianNoise>
       <frameName>world</frameName>
       <xyzOffsets>0 0 0</xyzOffsets>
       <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+    <link name="odom"/>
+    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>1.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>odom_perfect</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>odom</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin> -->
+    <!-- add gps -->
+    <plugin name="gps_sim" filename="libhector_gazebo_ros_gps.so">
+      <alwaysOn>1</alwaysOn>
+      <updateRate>10.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>fix</topicName>
+      <velocityTopicName>fix_velocity</velocityTopicName>
+      <drift>5.0 5.0 5.0</drift>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+      <velocityDrift>0 0 0</velocityDrift>
+      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
     </plugin>
   </gazebo>
   <!-- add camera -->
@@ -361,7 +393,7 @@
         <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
         <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
         <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>camera_link_pc</frameName>
         <pointCloudCutoff>0.5</pointCloudCutoff>
         <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
         <distortionK1>0</distortionK1>
@@ -380,17 +412,17 @@
   <link name="camera_link"/>
   <!--
   <link name="cameraLeft_depth_link"/> -->
-  <joint name="cameraLeft_joint" type="fixed">
-    <origin xyz="0 3 1" rpy="0 0.1 0"/>
+  <joint name="base_to_camera" type="fixed">
+    <origin xyz="1.2 0 0.6" rpy="0 0.1 0"/>
     <parent link="base_link"/>
     <child link="camera_link"/>
   </joint>
-  <!--
-  <joint name="cameraLeft_depth_joint" type="fixed">
+  <link name="camera_link_pc"/>
+  <joint name="camera_to_pc" type="fixed">
     <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
     <parent link="camera_link"/>
-    <child link="camera_link_depth_link"/>
-  </joint> -->
+    <child link="camera_link_pc"/>
+  </joint>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
     <origin xyz="-0.45 0 1.15" rpy="0 0 0"/>
