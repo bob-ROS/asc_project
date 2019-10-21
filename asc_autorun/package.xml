@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>asc_autorun</name>
+  <version>1.0.0</version>
+  <description>Simple collection of launch files for running the robot.</description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roslaunch</depend>
+</package>
+

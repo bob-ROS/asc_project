@@ -31,6 +31,7 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/asc/joint_states"/>
   </node>-->
+ <include file="$(find asc_control)/launch/control.launch" />
 
 </launch>
 
