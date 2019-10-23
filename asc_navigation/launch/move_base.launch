@@ -39,7 +39,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <rosparam file="$(find asc_navigation)/config/carlike/costmap_common_params.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/carlike/local_costmap_params.yaml" command="load"/>
     <rosparam file="$(find asc_navigation)/config/carlike/global_costmap_params.yaml" command="load"/>-->
-    <rosparam file="$(find asc_navigation)/config/carlike/teb_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find asc_navigation)/config/teb_local_planner_params.yaml" command="load"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_local.yaml" command="load" ns="local_costmap"/>

@@ -352,18 +352,21 @@
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin> -->
     <!-- add gps -->
-    <plugin name="gps_sim" filename="libhector_gazebo_ros_gps.so">
-      <alwaysOn>1</alwaysOn>
-      <updateRate>10.0</updateRate>
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>40</updateRate>
       <bodyName>base_link</bodyName>
-      <topicName>fix</topicName>
-      <velocityTopicName>fix_velocity</velocityTopicName>
-      <drift>5.0 5.0 5.0</drift>
-      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
-      <velocityDrift>0 0 0</velocityDrift>
-      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+      <frameId>base_link</frameId>
+      <topicName>navsat/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+  <!--    <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude> -->
+      <drift>0.0001 0.0001 0.0001</drift>
     </plugin>
   </gazebo>
+
   <!-- add camera -->
   <gazebo reference="camera_link">
     <sensor type="depth" name="openni_camera_camera">
