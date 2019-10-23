@@ -61,9 +61,6 @@
       <remap from="rgb/camera_info" to="/camera/color/camera_info"/>
       <remap from="scan" to="/scan"/>
       <remap from="odom" to="/odometry/filtered"/>
-      <!--
-    <param name="rgb/image_transport" type="string" value="compressed"/>
-    <param name="depth/image_transport" type="string" value="compressedDepth"/> -->
     </node>
   </group>
   <!-- Launch move_base + pointcloud_to_scan -->

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="zed_namespace" default="zed"/>
+  <arg name="svo_file" default=""/>
+  <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
+  <arg name="zed_node_name" default="zed_node"/>
+  <arg name="camera_model" default="zedm"/>
+  <!-- 'zed' or 'zedm' -->
+  <arg name="publish_urdf" default="false"/>
+  <arg name="visualize" default="true"/>
+  <arg name="use_scan" default="false"/>
+
+  <group ns="$(arg zed_namespace)">
+    <!-- ZED Wrapper Node-->
+    <include file="$(find zed_wrapper)/launch/zed_camera.launch">
+      <arg name="svo_file" value="$(arg svo_file)"/>
+      <arg name="node_name" value="$(arg zed_node_name)"/>
+      <arg name="camera_model" value="$(arg camera_model)"/>
+      <arg name="publish_urdf" value="$(arg publish_urdf)"/>
+    </include>
+  </group>
+  <!-- RTAB-map Node-->
+  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+    <arg name="rtabmap_args" value="--delete_db_on_start"/>
+    <arg name="rgb_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+    <arg name="depth_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+    <arg name="camera_info_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
+    <arg name="depth_camera_info_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/depth/camera_info"/>
+    <arg name="frame_id" value="base_link"/>
+    <arg name="approx_sync" value="false"/>
+    <arg name="visual_odometry" value="true"/>
+    <!--
+    <arg name="odom_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/odom"/> -->
+    <arg name="rviz" value="$(arg visualize)"/>
+    <arg name="rtabmapviz" value="$(arg visualize)"/>
+    <arg name="subscribe_scan" value="$(arg use_scan)"/>
+  </include>
+</launch>
+

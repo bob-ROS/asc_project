@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mast">
+  <xacro:include filename="macro_link.urdf.xacro"/>
+  <xacro:include filename="macro_wheel.urdf.xacro"/>
+  <!-- Base Size -->
+  <xacro:property name="base_x_size" value="0.325 "/>
+  <xacro:property name="base_y_size" value="0.16"/>
+  <xacro:property name="base_z_size" value="0.10"/>
+  <!-- Wheel Mounting Positions -->
+  <xacro:property name="wheelbase" value="0.1"/>
+  <xacro:property name="wheel_vertical_offset" value="-0.03"/>
+  <!-- Wheel Properties -->
+  <xacro:property name="wheel_length" value="0.025"/>
+  <xacro:property name="wheel_radius" value="0.035"/>
+  <!-- Base link is the center of the robot's bottom plate -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${ base_x_size} ${base_y_size} ${base_z_size}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${ base_x_size} ${base_y_size} ${base_z_size}"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Back wheels-->
+  <!--
+  <xacro:asc_wheel wheel_prefix="back_left" link_parent="base_link">
+    <origin xyz="${base_x_size/2-wheel_radius} ${-(wheel_length/2 + base_y_size/2)} ${wheel_vertical_offset}" rpy="0 90 0"/>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+  </xacro:asc_wheel>
+
+  <xacro:asc_wheel wheel_prefix="back_right" link_parent="base_link">
+    <origin xyz="${base_x_size/2-wheel_radius} ${wheel_length/2 + base_y_size/2} ${wheel_vertical_offset}" rpy="0 90 0"/>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+  </xacro:asc_wheel>
+ -->
+  <!-- Front wheels-->
+  <!--
+  <xacro:asc_wheel wheel_prefix="front_left" link_parent="base_link">
+    <origin xyz="${-(base_x_size/2-wheel_radius)} ${-(wheel_length/2 + base_y_size/2)} ${wheel_vertical_offset}" rpy="0 90 0"/>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+  </xacro:asc_wheel>
+
+  <xacro:asc_wheel wheel_prefix="front_right" link_parent="base_link">
+    <origin xyz="${-(base_x_size/2-wheel_radius)} ${wheel_length/2 + base_y_size/2} ${wheel_vertical_offset}" rpy="0 90 0"/>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+  </xacro:asc_wheel>
+ -->
+  <joint name="zed_camera_center_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="zed_camera_center"/>
+    <origin xyz="0.16 0 0.07" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_camera_center">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://zed_wrapper/urdf/models/ZED.stl"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 0.8"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Left Camera -->
+  <joint name="zed_left_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_left_camera_frame"/>
+    <origin xyz="0 0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_left_camera_frame"/>
+  <joint name="zed_left_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_left_camera_frame"/>
+    <child link="zed_left_camera_optical_frame"/>
+  </joint>
+  <link name="zed_left_camera_optical_frame"/>
+  <!-- Right Camera -->
+  <joint name="zed_right_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_right_camera_frame"/>
+    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_right_camera_frame"/>
+  <joint name="zed_right_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_right_camera_frame"/>
+    <child link="zed_right_camera_optical_frame"/>
+  </joint>
+  <link name="zed_right_camera_optical_frame"/>
+</robot>
+

@@ -18,12 +18,8 @@
   <!-- Load PID config for the joints -->
   <rosparam file="$(find asc_description)/config/gazebo_ros_control_params.yaml" command="load"/>
   <!-- Load the URDF into the ROS Parameter Server -->
-  <!--
-  <param name="asc/robot_description" textfile="$(find asc_description)/urdf/asc_description.urdf"/> for urdf-->
   <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/asc.urdf.xacro'"/>
-  <!--
-  <node name="tf_footprint_base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link base_footprint 40"/> -->
-  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" ns="/" type="spawn_model" respawn="false" output="screen" args="-urdf -model asc -param robot_description"/>
   <!--<node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-file $(find asc_description)/urdf/asc_description.urdf -urdf -model asc_description" output="screen"/> -->
 <!--  Verify if these are necessary!! -->

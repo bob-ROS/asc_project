@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="asc_wheel">
+  <xacro:macro name="asc_wheel" params="wheel_prefix link_parent *joint_pose *wheel_rotation">
+    <link name="${wheel_prefix}_wheel">
+      <visual>
+        <insert_block name="joint_pose"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <insert_block name="joint_pose"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${wheel_prefix}_joint" type="continuous">
+      <insert_block name="joint_pose"/>
+      <parent link="${link_parent}"/>
+      <child link="${wheel_prefix}_wheel"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+</robot>
