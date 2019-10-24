@@ -6,32 +6,29 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/joint_states"/>
   </node>
-  <!-- launchg rtab + zed node-->
+  <!-- launch rtab + zed node-->
+
   <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed.launch">
-    <arg name="visualize" value="true"/>
+    <arg name="visualize" value="false"/>
     <arg name="use_scan" value="true"/>
-    <!-- <arg name="multimaster" value="$(arg multimaster)"/>-->
-    <!--<remap from="rgb/image" to="/zed/zed_node/rgb/image_rect_color"/> 
-    <remap from="depth/image" to="/camera/depth/image_raw"/> -->
   </include>
-  <!-- lidar position os1_sensor-->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0 0 0 0 base_link os1_sensor" output="screen"/>
+
   <!-- scan converting -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" args=" cloud_in:=/os1_cloud_node/points" output="screen">
-    <remap from="scan" to="/scan"/>
-    <!--
-    < -->
-    <rosparam><!-- target_frame: ouster # Leave disabled to output scan in pointcloud frame -->
+  
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
+    <remap from="scan" to="rtabmap/scan"/> 
+    <remap from="cloud_in" to="os1_cloud_node/points"/>
+    <rosparam>
               target_frame: base_link # Leave empty to output scan in the pointcloud frame
               tolerance: 1.0
-              min_height: 0.05
+              min_height: 0.0
               max_height: 20.0
 
               angle_min: -3.14 # -30.0*M_PI/180.0
               angle_max: 3.14 # 30.0*M_PI/180.0
               angle_increment: 0.005 # M_PI/360.0
               scan_time: 0.3333
-              range_min: 2.0
+              range_min: 0.8
               range_max: 100.0
               use_inf: true
 
@@ -42,5 +39,8 @@
               concurrency_level: 1
     </rosparam>
   </node>
+  <!-- lidar position os1_sensor-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+  <include file="$(find asc_navigation)/launch/move_base.launch" /> 
 </launch>
 
