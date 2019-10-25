@@ -16,3 +16,8 @@ for cartographer:
 for rtab-map:
 
 `roslaunch asc_rtabmap_navigation rtab_demo.launch`
+
+How we used ouster_ros package. 
+A) Fixed frame name to \ouster_sensor to ouster_sensor. Tf can't handle \
+B) Opened firewall using gufw.
+C) Rewrote stamp to header.stamp = ros::Time::now();
