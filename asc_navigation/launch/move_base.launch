@@ -27,7 +27,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
   <!--
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/> -->
   <arg name="no_static_map" default="false"/>
-  <arg name="base_global_planner" default="global_planner/GlobalPlanner"/>
+  <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
   <!-- <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/> -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
@@ -44,9 +44,9 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_local.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find husky_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
-    <param name="global_costmap/width" value="40.0"/>
-    <param name="global_costmap/height" value="40.0"/>
+    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
+    <param name="global_costmap/width" value="70.0"/>
+    <param name="global_costmap/height" value="70.0"/>
     <param name="controller_frequency" value="5.0"/>
     <param name="controller_patience" value="15.0"/>
     <remap from="cmd_vel" to="/four_wheel_carlike_steering_controller/cmd_vel"/>

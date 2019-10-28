@@ -13,15 +13,15 @@
     <rosparam><!-- target_frame: ouster # Leave disabled to output scan in pointcloud frame -->
               target_frame: base_link # Leave empty to output scan in the pointcloud frame
               tolerance: 1.0
-              min_height: 0.05
+              min_height: 0.25
               max_height: 20.0
 
               angle_min: -3.14 # -30.0*M_PI/180.0
               angle_max: 3.14 # 30.0*M_PI/180.0
               angle_increment: 0.005 # M_PI/360.0
               scan_time: 0.3333
-              range_min: 2.0
-              range_max: 100.0
+              range_min: 1.25
+              range_max: 300.0
               use_inf: true
 
               # Concurrency level, affects number of pointclouds queued for processing and number of threads used
