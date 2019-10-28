@@ -9,20 +9,21 @@
   <!-- launch rtab + zed node-->
 
   <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed.launch">
-    <arg name="visualize" value="false"/>
+    <arg name="visualize" value="true"/>
     <arg name="use_scan" value="true"/>
+    <arg name="use_visual_odometry" value="false"/> <!-- else uses ICP-->
+    <arg name="use_icp_odometry" value="true"/> <!-- else uses visual odometry-->
   </include>
 
-  <!-- scan converting -->
-  
+  <!-- scan converting, required for obstacle layer -->
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
-    <remap from="scan" to="rtabmap/scan"/> 
+    <remap from="scan" to="/scan"/> 
     <remap from="cloud_in" to="os1_cloud_node/points"/>
     <rosparam>
               target_frame: base_link # Leave empty to output scan in the pointcloud frame
               tolerance: 1.0
               min_height: 0.0
-              max_height: 20.0
+              max_height: 1.0
 
               angle_min: -3.14 # -30.0*M_PI/180.0
               angle_max: 3.14 # 30.0*M_PI/180.0
