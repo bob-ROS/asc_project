@@ -9,7 +9,8 @@
   <arg name="publish_urdf" default="false"/>
   <arg name="visualize" default="true"/>
   <arg name="use_scan" default="false"/>
-
+  <arg name="use_visual_odometry" default="true"/>
+  <arg name="use_icp_odometry" default="false"/>
   <group ns="$(arg zed_namespace)">
     <!-- ZED Wrapper Node-->
     <include file="$(find zed_wrapper)/launch/zed_camera.launch">
@@ -28,13 +29,16 @@
     <arg name="depth_camera_info_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/depth/camera_info"/>
     <arg name="frame_id" value="base_link"/>
     <arg name="approx_sync" value="true"/>
-    <arg name="visual_odometry" value="true"/>
+    <arg name="visual_odometry" value="$(arg use_visual_odometry)"/>
+    <arg name="icp_odometry" value="$(arg use_icp_odometry)"/>
+   
 <!--    <arg name="odom_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/odom"/>-->
     <arg name="rviz" value="$(arg visualize)"/>
     <arg name="rtabmapviz" value="$(arg visualize)"/>
-    <arg name="subscribe_scan" value="$(arg use_scan)"/>
-    <arg name="scan_topic" value="scan"/>
+    <arg name="subscribe_scan_cloud" value="$(arg use_scan)"/>
+    <arg name="scan_cloud_topic" value="/os1_cloud_node/points"/>
     <arg name="map_frame_id" value="map"/>
+
   </include>
 </launch>
 
