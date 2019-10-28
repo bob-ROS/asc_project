@@ -4,7 +4,7 @@
   <arg name="zed_node_name" default="zed_node"/>
 
   <arg name="publish_urdf" default="false"/>
-  <arg name="visualize" default="true"/>
+  <arg name="visualize" default="false"/>
   <arg name="use_scan" default="false"/>
 
 
@@ -17,14 +17,15 @@
     <arg name="depth_camera_info_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/depth/camera_info"/>
     <arg name="frame_id" value="base_link"/>
     <arg name="approx_sync" value="true"/>
-    <arg name="visual_odometry" value="true"/>
-<!--    <arg name="odom_topic" value="/$(arg zed_namespace)/$(arg zed_node_name)/odom"/>-->
+    <arg name="visual_odometry" value="false"/>
+    <arg name="odom_topic" value="/odometry/filtered"/>
     <arg name="rviz" value="$(arg visualize)"/>
     <arg name="rtabmapviz" value="$(arg visualize)"/>
     <arg name="subscribe_scan" value="$(arg use_scan)"/>
     <arg name="scan_topic" value="scan"/>
     <arg name="map_frame_id" value="map"/>
-  
   </include>
+  <!-- Run RViz Node -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/rtabmap.rviz" output="screen"/>
 </launch>
 
