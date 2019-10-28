@@ -314,19 +314,19 @@
       <updateRate>50.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>imu/data</topicName>
+      <!--
       <accelDrift>0.00 0.00 0.00</accelDrift>
       <accelGaussianNoise>0.00 0.00 0.00</accelGaussianNoise>
       <rateDrift>0.0 0.000.0 </rateDrift>
       <rateGaussianNoise>0.00 0.005 0.00 </rateGaussianNoise>
       <headingDrift>0.00</headingDrift>
-      <headingGaussianNoise>0.00</headingGaussianNoise>
-      <!--
+      <headingGaussianNoise>0.00</headingGaussianNoise> -->
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
       <rateDrift>0.005 0.005 0.005 </rateDrift>
       <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
       <headingDrift>0.005</headingDrift>
-      <headingGaussianNoise>0.005</headingGaussianNoise> -->
+      <headingGaussianNoise>0.005</headingGaussianNoise>
     </plugin>
     <!-- for calculating perfect odometry -->
     <!--
@@ -391,14 +391,14 @@
             will control the frame rate. -->
         <updateRate>0.0</updateRate>
         <cameraName>camera_ir</cameraName>
-        <imageTopicName>/camera/color/image_raw</imageTopicName>
-        <cameraInfoTopicName>/camera/color/camera_info</cameraInfoTopicName>
-        <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
-        <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
-        <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
+        <imageTopicName>/zed/zed_node/rgb/image_rect_color</imageTopicName>
+        <cameraInfoTopicName>/zed/zed_node/rgb/camera_info </cameraInfoTopicName>
+        <depthImageTopicName>/zed/zed_node/depth/depth_registered</depthImageTopicName>
+        <depthImageCameraInfoTopicName>/zed/zed_node/depth/image_raw/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>/zed/zed_node/point_cloud/cloud_registered </pointCloudTopicName>
         <frameName>camera_link_pc</frameName>
         <pointCloudCutoff>0.4</pointCloudCutoff>
-        <!--
+        <!-- does nothing it seems
         <pointCloudCutoffMax>20.0</pointCloudCutoffMax> -->
         <distortionK1>0</distortionK1>
         <distortionK2>0</distortionK2>
@@ -414,8 +414,7 @@
     </sensor>
   </gazebo>
   <link name="camera_link"/>
-  <!--
-  <link name="cameraLeft_depth_link"/> -->
+
   <joint name="base_to_camera" type="fixed">
     <origin xyz="1.2 0 0.6" rpy="0 0.1 0"/>
     <parent link="base_link"/>
@@ -428,7 +427,7 @@
     <child link="camera_link_pc"/>
   </joint>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
+  <VLP-16 parent="base_link" name="velodyne" topic="/os1_cloud_node/points" hz="10" samples="440" gpu="false">
     <origin xyz="-0.45 0 1.15" rpy="0 0 0"/>
   </VLP-16>
 </robot>

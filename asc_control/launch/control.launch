@@ -8,6 +8,7 @@
   <rosparam command="load" file="$(find asc_control)/config/control.yaml"/>
   <!-- Spawn controllers -->
   <node name="base_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" args="asc_state_controller four_wheel_carlike_steering_controller"/>
+
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/joint_states"/>
   </node>

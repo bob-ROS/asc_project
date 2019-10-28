@@ -13,6 +13,7 @@ Panels:
         - /Navigation1/Local Costmap1
         - /Navigation1/Global Plan1
         - /Navigation1/Local Plan1
+        - /PointCloud21
         - /TF2
         - /TF2/Frames1
         - /PoseArray1
@@ -402,9 +403,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 999999
+      Max Intensity: 9.17544226e-38
       Min Color: 0; 0; 0
-      Min Intensity: -999999
+      Min Intensity: -5.28275625e-32
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
@@ -412,7 +413,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /velodyne_points
+      Topic: /os1_cloud_node/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -530,18 +531,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 8.50181198
-        Y: -2.65213442
-        Z: 3.03712726
+        X: 5.32115078
+        Y: -1.31016672
+        Z: 1.88490272
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.984800756
+      Pitch: 0.789800882
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.7672472
+      Yaw: 3.85224557
     Saved: ~
 Window Geometry:
   Displays:

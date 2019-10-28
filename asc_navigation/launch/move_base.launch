@@ -49,7 +49,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <param name="global_costmap/height" value="40.0"/>
     <param name="controller_frequency" value="5.0"/>
     <param name="controller_patience" value="15.0"/>
-    <remap from="cmd_vel" to="/cmd_vel"/>
+    <remap from="cmd_vel" to="/four_wheel_carlike_steering_controller/cmd_vel"/>
   </node>
 </launch>
 

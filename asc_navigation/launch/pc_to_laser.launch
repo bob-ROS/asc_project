@@ -6,7 +6,7 @@
         <arg name="camera" default="$(arg camera)"/>
     </include> -->
   <!-- run pointcloud_to_laserscan node -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" args=" cloud_in:=/velodyne_points" output="screen">
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" args=" cloud_in:=/os1_cloud_node/points" output="screen">
     <remap from="scan" to="/scan"/>
     <!--
     < -->
