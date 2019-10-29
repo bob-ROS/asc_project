@@ -8,11 +8,10 @@
   </node>
   <!-- launch rtab + zed node-->
 
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed.launch">
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
     <arg name="visualize" value="true"/>
     <arg name="use_scan" value="true"/>
-    <arg name="use_visual_odometry" value="false"/> <!-- else uses ICP-->
-    <arg name="use_icp_odometry" value="true"/> <!-- else uses visual odometry-->
+    <arg name="use_scan_cloud" value="false"/>
   </include>
 
   <!-- scan converting, required for obstacle layer -->

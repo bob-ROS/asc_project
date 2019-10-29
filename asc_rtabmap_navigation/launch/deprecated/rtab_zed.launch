@@ -38,6 +38,7 @@
     <arg name="subscribe_scan_cloud" value="$(arg use_scan)"/>
     <arg name="scan_cloud_topic" value="/os1_cloud_node/points"/>
     <arg name="map_frame_id" value="map"/>
+
   </include>
 </launch>
 
