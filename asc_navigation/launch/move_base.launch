@@ -23,9 +23,7 @@ OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTE
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE
 )ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<launch>
-  <!--
-  <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/> -->
+<launch>  
   <arg name="no_static_map" default="false"/>
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
@@ -33,13 +31,6 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
-    <!--<rosparam file="$(find asc_navigation)/config/planner.yaml" command="load"/> -->
-    <!-- observation sources located in costmap_common.yaml -->
-    <!--
-    <rosparam file="$(find asc_navigation)/config/carlike/costmap_common_params.yaml" command="load" ns="global_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/carlike/costmap_common_params.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/carlike/local_costmap_params.yaml" command="load"/>
-    <rosparam file="$(find asc_navigation)/config/carlike/global_costmap_params.yaml" command="load"/>-->
     <rosparam file="$(find asc_navigation)/config/teb_local_planner_params.yaml" command="load"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
@@ -47,8 +38,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
     <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
     <param name="global_costmap/width" value="70.0"/>
     <param name="global_costmap/height" value="70.0"/>
+    <param name="planner_frequency" value="1.0"/>
+    <param name="planner_patience" value="6.0"/>
     <param name="controller_frequency" value="5.0"/>
-    <param name="controller_patience" value="15.0"/>
+    <param name="controller_patience" value="3.0"/>
     <remap from="cmd_vel" to="/four_wheel_carlike_steering_controller/cmd_vel"/>
   </node>
 </launch>

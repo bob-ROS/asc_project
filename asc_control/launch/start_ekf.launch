@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Start EKF for localization -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
+  </node> 
+</launch>
+

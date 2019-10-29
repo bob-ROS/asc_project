@@ -27,5 +27,6 @@
   </include>
   <!-- Run RViz Node -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/rtabmap.rviz" output="screen"/>
+
 </launch>
 

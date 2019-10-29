@@ -9,7 +9,7 @@
   <arg name="publish_urdf" default="false"/>
   <arg name="visualize" default="true"/>
   <arg name="use_scan" default="false"/>
-  <arg name="use_visual_odometry" default="true"/>
+  <arg name="use_visual_odometry" default="false"/> <!-- ZED camera provides visual odometry-->
   <arg name="use_icp_odometry" default="false"/>
   <group ns="$(arg zed_namespace)">
     <!-- ZED Wrapper Node-->
