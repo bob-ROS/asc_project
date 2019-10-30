@@ -94,7 +94,7 @@
   <!--
    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
-    <remap from="odometry/filtered" to="/scan"/>
+    <remap from="odometry/filtered" to="odometry/filtered"/>
   </node> -->
   <!-- start move_base-->
   <!--

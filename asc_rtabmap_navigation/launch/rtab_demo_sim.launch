@@ -57,18 +57,19 @@
       <param name="voxel_size" type="double" value="0.01"/>
     </node>
     <!-- Visualisation RTAB-Map -->
+    <!--
     <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen">
       <param name="subscribe_depth" type="bool" value="true"/>
       <param name="subscribe_scan" type="bool" value="true"/>
       <param name="frame_id" type="string" value="base_link"/>
       <param name="wait_for_transform" type="bool" value="true"/>
-      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>s
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
       <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
       <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
       <remap from="scan" to="/scan"/>
       <remap from="odom" to="/odometry/filtered"/>
-    </node>
-  </group>
+    </node>-->
+  </group> 
   <!-- Launch move_base + pointcloud_to_scan -->
  <!--
  <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
