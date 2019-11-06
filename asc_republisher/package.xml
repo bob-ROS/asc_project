@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>asc_republisher</name>
+  <version>1.0.0</version>
+  <description>
+    <p>URDF Description package for asc_description</p>
+    <p>This package contains remapping neccecery for the roboRIO</p>
+  </description>
+  <author>TODO</author>
+  <maintainer email="TODO@email.com"/>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roslaunch</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>rviz</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>gazebo</depend>
+  <depend>hector_gazebo_plugins</depend>
+  <depend>velodyne_simulator</depend>
+  <depend>gazebo_ros_control</depend>
+  <depend>joint_state_controller</depend>
+  <export>
+    <architecture_independent/>
+  </export>
+</package>
+

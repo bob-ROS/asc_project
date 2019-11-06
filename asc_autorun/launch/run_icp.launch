@@ -8,7 +8,7 @@
   </node>
   <!-- launch rtab + zed node-->
 
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_icp.launch">
     <arg name="visualize" value="false"/>
     <arg name="use_scan" value="true"/>
     <arg name="use_scan_cloud" value="false"/>

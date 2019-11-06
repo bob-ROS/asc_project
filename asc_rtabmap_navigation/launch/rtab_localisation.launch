@@ -12,7 +12,7 @@
   <!-- use scan or scan_cloud-->
   <arg name="use_scan_cloud" default="false"/>
   <!-- use scan or scan_cloud-->
-  <arg name="use_icp_odometry" default="false"/>
+  <arg name="use_icp_odometry" default="true"/>
   <!-- to do-->
   <group ns="$(arg zed_namespace)">
     <!-- ZED Wrapper Node-->
@@ -39,7 +39,12 @@
            (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
       <param name="approx_sync" value="false"/>
     </node>
-    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen">
+
+      <!-- LOCALIZATION MODE -->
+      <param name="Mem/IncrementalMemory" type="string" value="false"/>
+
+      <param name="frame_id" type="string" value="base_link"/>
       <param name="frame_id" type="string" value="base_link"/>
       <param name="odom_frame_id" value="odom"/>
       <param name="subscribe_depth" type="bool" value="false"/>
@@ -52,8 +57,6 @@
       <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <remap from="rgbd_image" to="rgbd_image"/>
       <param name="queue_size" type="int" value="10"/>
-      <remap from="gps/fix" to="/fix"/>
-
       <!-- RTAB-Map's parameters -->
       <param name="RGBD/NeighborLinkRefining" type="string" value="true"/>
       <param name="RGBD/ProximityBySpace" type="string" value="true"/>
