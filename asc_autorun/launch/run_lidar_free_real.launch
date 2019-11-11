@@ -20,9 +20,9 @@
     <param name="frame_id" type="string" value="base_link"/>
   </node>
 
- 
+<!-- 
   <node pkg="asc_republisher" type="asc_republisher" name="republisher"/>
-
+-->
   <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
     <remap from="image"       to="/zed/zed_node/depth/depth_registered"/>
     <remap from="camera_info" to="/zed/zed_node/depth/camera_info"/>
@@ -33,9 +33,10 @@
   </node>
 
 
+    <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
 
-<!-- 
+ 
 <include file="$(find asc_navigation)/launch/move_base.launch" />
- -->
+
 </launch>
 

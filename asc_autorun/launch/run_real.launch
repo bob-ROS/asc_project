@@ -1,20 +1,26 @@
 <?xml version="1.0"?>
 <launch>
-  <!--
-  <arg name="model" default="asc"> -->
+
+  <arg name="use_move" default="false"/>
+  <arg name="use_zed" default="false"/>
+  <arg name="use_lidar" default="false"/>
+
+
+
+  <!-- TF publisher-->
   <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/joint_states"/>
   </node>
-  <!-- launch rtab + zed node-->
 
+  <!-- launch rtab + zed node-->
   <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
     <arg name="visualize" value="false"/>
-    <arg name="use_scan" value="true"/>
-    <arg name="use_scan_cloud" value="false"/>
-    <arg name="use_icp_odometry" value="true"/>
-
+    <arg name="use_scan" value="false"/>
+    <arg name="use_scan_cloud" value="true"/>
+    <arg name="use_icp_odometry" value="false"/>
   </include>
+
 
   <!-- scan converting, required for obstacle layer -->
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
@@ -43,6 +49,11 @@
   </node>
   <!-- lidar position os1_sensor-->
   <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
-  <include file="$(find asc_navigation)/launch/move_base.launch" /> 
+  
+
+  <node pkg="asc_republisher" type="asc_republisher" name="republisher"/>
+<!--
+<include file="$(find asc_navigation)/launch/move_base.launch" /> 
+-->
 </launch>
 

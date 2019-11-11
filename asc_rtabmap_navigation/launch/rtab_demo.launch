@@ -11,8 +11,7 @@
   <arg name="use_scan" default="true"/>
   <!-- use scan or scan_cloud-->
   <arg name="use_scan_cloud" default="false"/>
-  <!-- use scan or scan_cloud-->
-  <arg name="use_icp_odometry" default="false"/>
+
   <!-- to do-->
   <group ns="$(arg zed_namespace)">
     <!-- ZED Wrapper Node-->
@@ -51,7 +50,7 @@
       <remap from="scan" to="/scan"/>
       <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <remap from="rgbd_image" to="rgbd_image"/>
-      <param name="queue_size" type="int" value="10"/>
+      <param name="queue_size" type="int" value="100"/>
       <remap from="gps/fix" to="/fix"/>
 
       <!-- RTAB-Map's parameters -->
@@ -60,6 +59,8 @@
       <param name="RGBD/AngularUpdate" type="string" value="0.01"/>
       <param name="RGBD/LinearUpdate" type="string" value="0.01"/>
       <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
+      <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>
+
       <param name="Grid/FromDepth" type="string" value="false"/>
       <!-- occupancy grid from lidar -->
       <param name="Reg/Force3DoF" type="string" value="true"/>
@@ -74,7 +75,7 @@
     <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
       <remap from="rgbd_image" to="/rtabmap/rgbd_image/compressed"/>
       <remap from="cloud" to="/rtabmap/cloud_map"/>
-      <param name="queue_size" type="int" value="10"/>
+      <param name="queue_size" type="int" value="100"/>
       <param name="voxel_size" type="double" value="0.01"/>
     </node>
     <!-- Visualisation RTAB-Map -->

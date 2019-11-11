@@ -83,7 +83,7 @@
       <remap from="odom"                   to="$(arg odom_topic)"/>
       
       <param name="frame_id"                    type="string" value="base_link"/>
-      <param name="queue_size"                  type="int"    value="10"/>
+      <param name="queue_size"                  type="int"    value="100"/>
 
 <!--
       <param name="odom_frame_id"               type="string" value="$(arg vo_frame_id)"/>
