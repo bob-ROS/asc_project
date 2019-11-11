@@ -2,7 +2,7 @@
  asc_state_controller:
    type: "joint_state_controller/JointStateController"
    publish_rate: 50  
- four_wheel_carlike_steering_controller:
+ carlike_steering_controller:
    type: "four_wheel_carlike_steering_controller/FourWheelCarlikeSteeringController"
    front_wheel: ['left_front_wheel_joint', 'right_front_wheel_joint']
    rear_wheel: ['left_rear_wheel_joint', 'right_rear_wheel_joint']
