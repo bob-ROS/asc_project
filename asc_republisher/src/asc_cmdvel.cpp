@@ -27,8 +27,8 @@ int main(int argc, char** argv){
 
   ros::init(argc, argv, "republisher");
   ros::NodeHandle n;
-  chatter_pub = n.advertise<geometry_msgs::Twist>("cmd_vel", 1000);
-  ros::Subscriber sub = n.subscribe("/cmd_vel_xbox", 1000, cmdCallback);
+  chatter_pub = n.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  ros::Subscriber sub = n.subscribe("/cmd_vel_xbox", 10, cmdCallback);
   ros::spin();
 
 

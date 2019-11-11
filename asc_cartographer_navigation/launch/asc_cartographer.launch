@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+
+
+
+  <arg name="use_viz" default="false"/>
+  <arg name="use_move_base" default="false"/>
+
+
+
+    <!-- LiDaR start  -->
+    <include file="$(find ouster_ros)/os1.launch">
+      <arg name="os1_hostname" value="os1"/>
+      <arg name="os1_udp_dest" value="tx2"/>
+      <arg name="lidar_mode" value="1024x20"/>
+      <arg name="viz" value="false"/>
+    </include>
+
+
+	<!-- TF publisher-->
+	<param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+		<remap from="/joint_states" to="/joint_states"/>
+	</node>
+
+  <!-- lidar position os1_sensor-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+
+
+
+  <!-- Run Cartographer Node -->
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="           -configuration_directory               $(find asc_cartographer_navigation)/config           -configuration_basename asc.lua" output="screen">
+    <remap from="imu" to="imu/data"/>
+    <remap from="odom" to="odometry/filtered"/>
+    <remap from="points2" to="/os1_cloud_node/points"/>
+  </node>
+
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+      type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+
+  <!-- Run RViz Node -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_cartographer_navigation)/cartographer.rviz" output="screen" if="$(arg use_viz)"/>
+
+
+  <!--run ekf -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
+    <remap from="odometry/filtered" to="odometry/filtered"/>
+  </node>
+
+
+  <!--- Run Move Base -->
+  <include file="$(find asc_navigation)/launch/move_base.launch" if="$(arg use_move_base)"/>
+</launch>
+
+

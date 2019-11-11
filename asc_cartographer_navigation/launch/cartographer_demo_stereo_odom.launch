@@ -15,6 +15,14 @@
 -->
 
 <launch>
+
+    <!-- TF publisher-->
+    <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/joint_states"/>
+    </node>
+
+
   <!-- Run Cartographer Node -->
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="

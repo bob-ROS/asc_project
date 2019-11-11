@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch> 
+    <!-- LiDaR start  -->
+    <include file="$(find ouster_ros)/os1.launch">
+      <arg name="os1_hostname" value="os1"/>
+      <arg name="os1_udp_dest" value="tx2"/>
+      <arg name="lidar_mode" value="1024x10"/>
+      <arg name="viz" value="false"/>
+    </include>
+
+
+</launch>
+
