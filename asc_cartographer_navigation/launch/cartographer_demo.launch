@@ -30,7 +30,9 @@
     <remap from="odometry/filtered" to="odometry/filtered"/>
   </node>
   <!--- Run Move Base -->
+
   <include file="$(find asc_navigation)/launch/move_base.launch"/>
+
 </launch>
 
 

@@ -6,17 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Sensing1
-        - /Navigation1
+        - /Sensing1/Imu1
         - /Navigation1/Exploration1
-        - /Navigation1/Global Costmap1
-        - /Navigation1/Local Costmap1
-        - /Navigation1/Global Plan1
-        - /Navigation1/Local Plan1
-        - /PointCloud21
-        - /TF2
         - /TF2/Frames1
-        - /PoseArray1
       Splitter Ratio: 0.494924009
     Tree Height: 916
   - Class: rviz/Selection
@@ -184,7 +176,7 @@ Visualization Manager:
               Scale: 1
               Value: true
             Value: true
-          Enabled: false
+          Enabled: true
           Keep: 100
           Name: Odometry
           Position Tolerance: 0.100000001
@@ -200,7 +192,7 @@ Visualization Manager:
             Value: Arrow
           Topic: /odometry/filtered
           Unreliable: false
-          Value: false
+          Value: true
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -284,7 +276,7 @@ Visualization Manager:
           Unreliable: false
           Value: false
           fixed_frame_orientation: true
-      Enabled: true
+      Enabled: false
       Name: Sensing
     - Class: rviz/Group
       Displays:
@@ -334,12 +326,12 @@ Visualization Manager:
           Class: rviz/Map
           Color Scheme: costmap
           Draw Behind: false
-          Enabled: true
+          Enabled: false
           Name: Local Costmap
           Topic: /move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
-          Value: true
+          Value: false
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
@@ -403,7 +395,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 8.8817842e-15
+      Max Intensity: 999999
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: PointCloud2
@@ -524,25 +516,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 32.5267487
+      Distance: 73.4942627
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 6.6331358
-        Y: -18.302002
-        Z: 5.27835255e-06
+        X: -11.5357637
+        Y: -10.7673035
+        Z: 4.54361998e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.954797804
+      Pitch: 1.19979632
       Target Frame: <Fixed Frame>
       Value: ThirdPersonFollower (rviz)
-      Yaw: 4.73407125
+      Yaw: 5.37907219
     Saved: ~
 Window Geometry:
   Displays:

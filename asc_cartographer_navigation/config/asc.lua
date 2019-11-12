@@ -54,7 +54,7 @@ POSE_GRAPH.global_constraint_search_after_n_seconds = 30 -- Increase
 
 ---------Global/Local SLAM---------
 TRAJECTORY_BUILDER_2D.submaps.num_range_data = 100 -- Decrease
-TRAJECTORY_BUILDER_2D.max_range = 10. -- Decrease
+TRAJECTORY_BUILDER_2D.max_range = 30. -- Decrease
 
 -------------------------------------------------------------------------------------
 

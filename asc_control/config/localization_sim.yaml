@@ -11,7 +11,7 @@ frequency: 50
 #roll˙,pitch˙,yaw˙,
 #X¨,Y¨,Z¨)
 
-odom0: four_wheel_carlike_steering_controller/odom
+odom0: carlike_steering_controller/odom
 odom0_config: [false, false, false,
                false, false, false,
                true, true, true,
