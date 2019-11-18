@@ -1,15 +1,7 @@
 global_frame: odom
 rolling_window: true
 track_unknown_space: true
-
-
-#global_frame: map
-#static_map: true
-#rolling_window: false
-#track_unknown_space: false
-width: 100.0
-height: 100.0
+footprint_padding: 0.8
 plugins:
-  - {name: static,                  type: "costmap_2d::StaticLayer"}
   - {name: obstacles_laser,           type: "costmap_2d::ObstacleLayer"}
   - {name: inflation,                 type: "costmap_2d::InflationLayer"}
