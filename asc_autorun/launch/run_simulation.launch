@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <launch>
   <include file="$(find asc_description)/launch/gazebo.launch"/>
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed_sim.launch"/>
+
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed.launch"/>
+
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_navigation)/launch/move_base.launch" /> 
 </launch>

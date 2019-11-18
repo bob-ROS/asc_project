@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="bag_filename" default="/home/nvidia/bagfiles/session1.bag"/>
+  <!-- lidar position os1_sensor-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+  <!-- Run Cartographer Node -->
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="           -configuration_directory               $(find asc_cartographer_navigation)/config           -configuration_basename asc_real.lua" output="screen">
+    <remap from="imu" to="/os1_cloud_node/imu"/>
+    <remap from="odom" to="/zed/zed_node/odom"/>
+    <remap from="points2" to="/os1_cloud_node/points"/>
+  </node>
+
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+      type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+
+  <!-- Run RViz Node -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_cartographer_navigation)/cartographer.rviz" output="screen"/>
+
+  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock $(arg bag_filename)" />
+
+</launch>
+
+

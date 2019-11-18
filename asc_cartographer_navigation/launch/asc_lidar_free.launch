@@ -4,8 +4,8 @@
 
   <arg name="use_viz" default="false"/>
   <arg name="use_move_base" default="false"/>
-  <arg name="starting_lidar" default="true"/>
-  <arg name="starting_gps" default="true"/>
+  <arg name="starting_lidar" default="false"/>
+
 
   <!-- Zed param  -->
   <arg name="svo_file" default=""/>
@@ -77,28 +77,6 @@
 
   <!-- lidar position os1_sensor-->
   <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
-
-
-  <!-- GPS position os1_sensor-->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_gps" args="0 0 0.2 -1.57 0 0 base_link gps" output="screen"/>
-
-  <!--  GPS  -->
-  <arg name="port" default="/dev/ttyUSB0" />
-  <arg name="baud" default="4800" />
-  <arg name="frame_id" default="gps" />
-  <arg name="use_GNSS_time" default="False" />
-  <arg name="time_ref_source" default="gps" />
-  <arg name="useRMC" default="False" />
-
-  <node name="nmea_serial_driver_node" pkg="nmea_navsat_driver" type="nmea_serial_driver" output="screen">
-    <param name="port" value="$(arg port)"/>
-    <param name="baud" value="$(arg baud)" />
-    <param name="frame_id" value="$(arg frame_id)" />
-    <param name="use_GNSS_time" value="$(arg use_GNSS_time)" />
-    <param name="time_ref_source" value="$(arg time_ref_source)" />
-    <param name="useRMC" value="$(arg useRMC)" />
-  </node>
-
 
 
 

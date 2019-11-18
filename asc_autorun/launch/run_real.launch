@@ -1,59 +1,153 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="use_move" default="false"/>
-  <arg name="use_zed" default="false"/>
-  <arg name="use_lidar" default="false"/>
+  <arg name="use_lidar" default="true"/>
+  <arg name="use_zed" default="true"/>
+  <arg name="localization_mode" default="false"/>
+  <arg name="use_move_base" default="false"/>
 
-
-
-  <!-- TF publisher-->
-  <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-    <remap from="/joint_states" to="/joint_states"/>
-  </node>
-
-  <!-- launch rtab + zed node-->
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
-    <arg name="visualize" value="false"/>
-    <arg name="use_scan" value="false"/>
-    <arg name="use_scan_cloud" value="true"/>
-    <arg name="use_icp_odometry" value="false"/>
-  </include>
-
-
-  <!-- scan converting, required for obstacle layer -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
-    <remap from="scan" to="/scan"/> 
-    <remap from="cloud_in" to="os1_cloud_node/points"/>
-    <rosparam>
-              target_frame: base_link # Leave empty to output scan in the pointcloud frame
-              tolerance: 1.0
-              min_height: 0.2
-              max_height: 1.0
-
-              angle_min: -3.14 # -30.0*M_PI/180.0
-              angle_max: 3.14 # 30.0*M_PI/180.0
-              angle_increment: 0.005 # M_PI/360.0
-              scan_time: 0.3333
-              range_min: 0.8
-              range_max: 100.0
-              use_inf: true
-
-              # Concurrency level, affects number of pointclouds queued for processing and number of threads used
-              # 0 : Detect number of cores
-              # 1 : Single threaded
-              # 2-&gt;inf : Parallelism level
-              concurrency_level: 1
-    </rosparam>
-  </node>
-  <!-- lidar position os1_sensor-->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+  <arg name="cartographer_mode" default="false"/>
+  
+ 
+  <!--  Make sure you enable corresponding unit first  -->
+  <!--  scan_mode 0 - no scan                          -->   
+  <!--  scan_mode 1 - scan from ZED                    --> 
+  <!--  scan_mode 2 - scan from LiDaR                  --> 
+  
+  <arg name="scan_mode" default="2"/>
+  
+  
   
 
-  <node pkg="asc_republisher" type="asc_republisher" name="republisher"/>
-<!--
-<include file="$(find asc_navigation)/launch/move_base.launch" /> 
--->
+  <!--      General					-->
+  <group>
+    <!-- TF publisher-->
+    <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/joint_states"/>
+    </node>
+    
+    <!-- MoveBase -->
+    <include file="$(find asc_navigation)/launch/move_base.launch" if="$(arg use_move_base)"/>
+    
+    <!-- cmd MUX  -->
+    <include file="$(find asc_twist_mux)/launch/twist_mux.launch"> 
+    </include>
+  </group>
+
+  
+  
+  
+  <!--        ZED					-->
+  <group if="$(arg use_zed)">
+    <!-- scan converting from ZED  -->
+    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" if="$(eval arg('scan_mode') == 1)">
+      <remap from="image"       to="/zed/zed_node/depth/depth_registered"/>
+      <remap from="camera_info" to="/zed/zed_node/depth/camera_info"/>
+      <remap from="scan"        to="/scan"/>
+      <param name="range_max" type="double" value="4"/>
+      <param name="scan_height" type="int" value="10"/>
+      <param name="output_frame_id" type="str" value="zed_camera_center"/>
+    </node>
+
+  </group>
+  
+  
+   <!-- GPS position os1_sensor-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_gps" args="0 0 0.2 -1.57 0 0 base_link gps" output="screen"/>
+
+  <!--  GPS  -->
+  <arg name="port" default="/dev/ttyUSB0" />
+  <arg name="baud" default="4800" />
+  <arg name="frame_id" default="gps" />
+  <arg name="use_GNSS_time" default="False" />
+  <arg name="time_ref_source" default="gps" />
+  <arg name="useRMC" default="False" />
+
+  <node name="nmea_serial_driver_node" pkg="nmea_navsat_driver" type="nmea_serial_driver" output="screen">
+    <param name="port" value="$(arg port)"/>
+    <param name="baud" value="$(arg baud)" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="use_GNSS_time" value="$(arg use_GNSS_time)" />
+    <param name="time_ref_source" value="$(arg time_ref_source)" />
+    <param name="useRMC" value="$(arg useRMC)" />
+  </node>
+  
+  
+  <!--        Lidar					-->
+  <group if="$(arg use_lidar)">
+
+    <!-- LiDaR start  -->
+    <include file="$(find ouster_ros)/os1.launch">
+      <arg name="os1_hostname" value="os1"/>
+      <arg name="os1_udp_dest" value="tx2"/>
+      <arg name="lidar_mode" value="1024x10"/>
+      <arg name="viz" value="false"/>
+    </include>
+    
+
+
+    <!-- scan converting from lidar, required for obstacle layer -->
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen" if="$(eval arg('scan_mode') == 2)">
+      <remap from="scan" to="/scan"/> 
+      <remap from="cloud_in" to="os1_cloud_node/points"/>
+      <rosparam>
+                target_frame: base_link # Leave empty to output scan in the pointcloud frame
+                tolerance: 1.0
+                min_height: 0.2
+                max_height: 1.0
+
+                angle_min: -3.14 # -30.0*M_PI/180.0
+                angle_max: 3.14 # 30.0*M_PI/180.0
+                angle_increment: 0.005 # M_PI/360.0
+                scan_time: 0.3333
+                range_min: 0.8
+                range_max: 100.0
+                use_inf: true
+
+                # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+                # 0 : Detect number of cores
+                # 1 : Single threaded
+                # 2-&gt;inf : Parallelism level
+                concurrency_level: 1
+      </rosparam>
+    </node>
+    
+    <!-- lidar position os1_sensor-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+  </group>
+
+
+<group unless="$(arg cartographer_mode)">
+  <!-- launch rtab + zed node-->
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
+    <arg name="visualize" value="false"          />
+    <arg name="use_scan" value="false"          />
+    <arg name="use_scan_cloud" value="true"     />
+  </include>
+</group>
+
+
+
+  <!-- Run Cartographer Node -->
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory
+              $(find asc_cartographer_navigation)/config
+          -configuration_basename asc.lua"
+      output="screen"
+      if="$(arg cartographer_mode)">
+    <remap from="imu" to="imu/data" />
+    <remap from="odom" to="odometry/filtered" />
+    <remap from="points2" to="/os1_cloud_node/points" />
+  </node>
+
+
+
+
+
+
+
+
 </launch>
 

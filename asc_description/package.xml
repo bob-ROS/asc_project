@@ -17,7 +17,7 @@ for asc_description robot</p>
   <depend>joint_state_publisher</depend>
   <depend>gazebo</depend>
   <depend>hector_gazebo_plugins</depend>
-  <depend>velodyne_simulator</depend>
+  <depend>velodyne</depend>
   <depend>gazebo_ros_control</depend>
   <depend>joint_state_controller</depend>
   <export>
