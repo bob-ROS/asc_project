@@ -25,7 +25,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
 -->
 <launch>  
   <arg name="no_static_map" default="false"/>
-  <arg name="base_global_planner" default="navfn/NavfnROS"/>
+
+  <arg name="base_global_planner" default="navfn/NavfnROS"/> 
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
   <!-- <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/> -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">

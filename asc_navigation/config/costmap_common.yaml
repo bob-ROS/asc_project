@@ -8,8 +8,8 @@ transform_tolerance: 0.5
 
 resolution: 0.05
 
-obstacle_range: 100.0
-raytrace_range: 6.0
+obstacle_range: 20.0
+raytrace_range: 21.0
 
 #layer definitions
 static:
@@ -19,6 +19,7 @@ static:
 obstacles_laser:
     observation_sources: laser
     laser: {data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true, min_obstacle_height: 0.0, max_obstacle_height: 1.0}
-
+    #point_cloud_sensor: {sensor_frame: frame_name, data_type: PointCloud, topic: topic_name, marking: true, clearing: true}
+  
 inflation:
     inflation_radius: 1.0
