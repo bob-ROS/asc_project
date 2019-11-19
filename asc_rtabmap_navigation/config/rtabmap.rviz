@@ -395,7 +395,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 9.41672568e-43
+      Max Intensity: 999999
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: PointCloud2
@@ -433,6 +433,22 @@ Visualization Manager:
       Topic: /move_base/TebLocalPlannerROS/local_plan
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Arrow Length: 0.300000012
+      Axes Length: 0.300000012
+      Axes Radius: 0.00999999978
+      Class: rviz/PoseArray
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.0700000003
+      Head Radius: 0.0299999993
+      Name: PoseArray
+      Shaft Length: 0.230000004
+      Shaft Radius: 0.00999999978
+      Shape: Arrow (Flat)
+      Topic: /planned_subgoals
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -461,18 +477,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -2.10264754
-        Y: -3.14741755
-        Z: 3.93485594
+        X: 1.75673306
+        Y: -0.871301651
+        Z: 5.40479803
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.879795611
+      Pitch: 0.774795532
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 2.53826427
+      Yaw: 4.91826487
     Saved: ~
 Window Geometry:
   Displays:

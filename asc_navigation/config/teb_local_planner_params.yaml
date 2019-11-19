@@ -1,6 +1,6 @@
 TebLocalPlannerROS:
 
- odom_topic: /zed/zed_node/odom    
+ #odom_topic: /zed/zed_node/odom    
  # Trajectory
   
  teb_autosize: True
