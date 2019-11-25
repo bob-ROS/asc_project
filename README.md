@@ -18,6 +18,6 @@ for rtab-map:
 `roslaunch asc_rtabmap_navigation rtab_demo.launch`
 
 How we used ouster_ros package. 
-A) Fixed frame name to \ouster_sensor to ouster_sensor. Tf can't handle \
+A) Fixed frame name to \ouster_sensor to ouster_sensor. Tf can't handle the backslash in the header.
 B) Opened firewall using gufw.
 C) Rewrote stamp to header.stamp = ros::Time::now();
