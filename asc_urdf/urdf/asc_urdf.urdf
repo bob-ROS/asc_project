@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="asc_urdf">
+  <link name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00354367792622959 -0.00408314240366044 0.189948455311974"
+        rpy="0 0 0" />
+      <mass
+        value="14.1800145264861" />
+      <inertia
+        ixx="0.0519967415993783"
+        ixy="-1.12399831877328E-05"
+        ixz="-0.00143014184891189"
+        iyy="0.19035789846589"
+        iyz="-5.01339506637704E-06"
+        izz="0.208878625775803" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_right_steering_link">
+    <inertial>
+      <origin
+        xyz="-0.00370338121310537 -0.0196362046661666 -0.135091153340805"
+        rpy="0 0 0" />
+      <mass
+        value="0.380919703630295" />
+      <inertia
+        ixx="0.00107634033140466"
+        ixy="1.51573650824965E-05"
+        ixz="-6.94838293881106E-05"
+        iyy="0.000914613440717638"
+        iyz="0.000195407309247701"
+        izz="0.000234021785961031" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/front_right_steering_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/front_right_steering_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="front_right_steering_joint"
+    type="revolute">
+    <origin
+      xyz="0.35635 -0.23074 0.27672"
+      rpy="0.29046 -0.12882 -1.6092" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_steering_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.3"
+      upper="0.3"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link name="front_right_wheel_link">
+    <inertial>
+      <origin
+        xyz="-1.78085064877393 -0.596628586488151 1.14528514474377"
+        rpy="0 0 0" />
+      <mass
+        value="368.982800568637" />
+      <inertia
+        ixx="133.019788003658"
+        ixy="-43.9800933039268"
+        ixz="50.7007125568813"
+        iyy="317.318424128749"
+        iyz="25.9183879205888"
+        izz="292.361193071731" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+       <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="front_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.024 0.023741 -0.18704"
+      rpy="0.13981 0.28531 1.6105" />
+    <parent
+      link="front_right_steering_link" />
+    <child
+      link="front_right_wheel_link" />
+    <axis
+      xyz="5.3677E-05 1 0.00055924" />
+  </joint>
+  <link name="front_left_steering_link">
+    <inertial>
+      <origin
+        xyz="-0.0143963427033764 -0.0197827213475441 -0.13435099647841"
+        rpy="0 0 0" />
+      <mass
+        value="0.380923597476793" />
+      <inertia
+        ixx="0.001079691155645"
+        ixy="1.10638461415172E-05"
+        ixz="-4.46502464274426E-05"
+        iyy="0.000915031639103001"
+        iyz="0.000194935954793174"
+        izz="0.000230248883032502" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/front_left_steering_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asc_urdf/meshes/front_left_steering_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="front_left_steering_joint"
+    type="revolute">
+    <origin
+      xyz="0.35635 0.22966 0.27672"
+      rpy="0.28907 0.00024223 -1.5707" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_steering_link" />
+    <axis
+      xyz="-0.13374 -0.0010779 -0.99102" />
+    <limit
+      lower="-0.3"
+      upper="0.3"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link name="front_left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-1.78085064877393 -1.19364246250239 1.14578573702053"
+        rpy="0 0 0" />
+      <mass
+        value="368.982800568637" />
+      <inertia
+        ixx="133.019788003658"
+        ixy="-43.9517327500751"
+        ixz="50.7252998913125"
+        iyy="317.347405323308"
+        iyz="25.9044147226604"
+        izz="292.332211877173" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="front_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.05 0.023546 -0.17951"
+      rpy="1.5963E-05 0.28907 1.5707" />
+    <parent
+      link="front_left_steering_link" />
+    <child
+      link="front_left_wheel_link" />
+    <axis
+      xyz="5.3677E-05 -1 0.00055924" />
+  </joint>
+  <link name="rear_right_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.870645503315132 -0.598162528448941 1.1468467149915"
+        rpy="0 0 0" />
+      <mass
+        value="368.982800568637" />
+      <inertia
+        ixx="133.019788003658"
+        ixy="-43.9659147457672"
+        ixz="50.7130082066283"
+        iyy="317.332916679608"
+        iyz="25.9114053734586"
+        izz="292.346700520872" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+       <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rear_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.48012 -0.29752 0.11"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_right_wheel_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link name="rear_left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.870645503315131 -1.19210859052895 1.1468467149915"
+        rpy="0 0 0" />
+      <mass
+        value="368.982800568637" />
+      <inertia
+        ixx="133.019788003658"
+        ixy="-43.9659147457672"
+        ixz="50.7130082066283"
+        iyy="317.332916679608"
+        iyz="25.9114053734586"
+        izz="292.346700520872" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.57 0 0" />
+      <geometry>
+       <cylinder length="0.032" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rear_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.48012 0.29643 0.11"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+
+</robot>
+<!--
+  old xyz
+  "-0.45012 -0.29752 0.11"
+
+  new steering_joint
+  "-0.45012 -0.23074 0.27672"
+
+  new wheel_joint
+
+  *steering_joint_pose
+  *wheel_joint_origin
+  *wheel_joint_axis
+-->

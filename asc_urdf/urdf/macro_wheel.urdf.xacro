@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asc_wheel">
+  <xacro:macro name="asc_wheel" params="wheel_prefix link_parent wheel_length wheel_radius *wheel_joint_origin *wheel_joint_axis">
+
+    <link name="${wheel_prefix}_wheel_link">
+      <inertial>
+        <origin xyz="-1.02140518265514E-14 6.85007606193722E-14 0.00509989314946457" rpy="0 0 0"/>
+        <mass value="3.6905479088754"/>
+        <inertia ixx="0.117114266308143" ixy="1.38777878078145E-17" ixz="2.37549730750149E-18" iyy="0.117114266308143" iyz="3.40770700491441E-17" izz="0.22795106404409"/>
+
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="1.57 0 0" />
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="1.57 0 0" />
+        <geometry>
+        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${wheel_prefix}_wheel_joint" type="continuous">
+      <xacro:insert_block name="wheel_joint_origin"/>
+      <parent
+        link="${wheel_prefix}_steering_link" />
+      <child
+        link="${wheel_prefix}_wheel_link" />
+      <xacro:insert_block name="wheel_joint_axis"/>
+        
+    </joint>
+
+
+
+    <transmission name="${wheel_prefix}_wheel_joint_tran">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${wheel_prefix}_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${wheel_prefix}_wheel_joint_motor">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${wheel_prefix}_steering_tran">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${wheel_prefix}_steering_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${wheel_prefix}_steering_motor">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro>
+
+  <xacro:macro name="asc_wheel_front" params="wheel_prefix link_parent wheel_length wheel_radius *steering_joint_pose *wheel_joint_origin *wheel_joint_axis">
+    <link name="front_${wheel_prefix}_steering_link">
+      <inertial>
+        <origin
+          xyz="0.0 0.0 0.0"
+          rpy="0 0 0" />
+          <mass value="5.71439015182903"/>
+        <inertia
+          ixx="0.00107634033140466"
+          ixy="1.51573650824965E-05"
+          ixz="-6.94838293881106E-05"
+          iyy="0.000914613440717638"
+          iyz="0.000195407309247701"
+          izz="0.000234021785961031" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://asc_urdf/meshes/front_${wheel_prefix}_steering_link.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+    </link>
+  
+  <!-- Add base of wheel macro -->
+    <xacro:asc_wheel wheel_prefix="front_${wheel_prefix}"
+    link_parent="${link_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+    <xacro:insert_block name="wheel_joint_origin"/>
+    <xacro:insert_block name="wheel_joint_axis"/>
+    </xacro:asc_wheel>
+
+    <!-- Add specfic parts for forward wheels-->
+    <joint name="front_${wheel_prefix}_steering_joint" type="revolute">
+      <xacro:insert_block name="steering_joint_pose"/>
+      <parent link="${link_parent}"/>
+      <child link="front_${wheel_prefix}_steering_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-0.8" upper="0.9" effort="100" velocity="100"/>
+    </joint>
+
+  </xacro:macro>
+
+  <xacro:macro name="asc_wheel_rear" params="wheel_prefix link_parent wheel_length wheel_radius *steering_joint_pose *wheel_joint_origin *wheel_joint_axis">
+    <link name="rear_${wheel_prefix}_steering_link">
+        <inertial>
+          <origin
+            xyz="0.0 0.0 0.0"
+            rpy="0 0 0" />
+            <mass value="5.71439015182903"/>
+          <inertia
+            ixx="0.00107634033140466"
+            ixy="1.51573650824965E-05"
+            ixz="-6.94838293881106E-05"
+            iyy="0.000914613440717638"
+            iyz="0.000195407309247701"
+            izz="0.000234021785961031" />
+        </inertial>
+      </link>
+
+
+
+
+    <!-- Add base of wheel macro -->
+    <xacro:asc_wheel wheel_prefix="rear_${wheel_prefix}"
+    link_parent="${link_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+    <xacro:insert_block name="wheel_joint_origin"/>
+    <xacro:insert_block name="wheel_joint_axis"/>
+    </xacro:asc_wheel>
+
+    <!-- Add specfic parts for forward wheels-->
+    <joint name="rear_${wheel_prefix}_steering_joint" type="revolute">
+      <xacro:insert_block name="steering_joint_pose"/>
+      <parent link="${link_parent}"/>
+      <child link="rear_${wheel_prefix}_steering_link"/>
+      <axis xyz="0 0 -1"/>
+      <limit
+      lower="0.0"
+      upper="0.0"
+      effort="0"
+      velocity="0" />
+    </joint>
+
+  </xacro:macro>
+</robot>
+

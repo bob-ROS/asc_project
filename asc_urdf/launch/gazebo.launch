@@ -1,0 +1,46 @@
+<launch>
+  <include
+    file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+    <node
+    name="tf_footprint_base"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 base_link base_footprint 40" />
+
+
+  <!-- Load PID config for the joints -->
+  <rosparam file="$(find asc_urdf)/config/gazebo_ros_control_params.yaml" command="load"/>
+
+  <!-- Convert an xacro and put on parameter server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find asc_urdf)/urdf/asc.urdf.xacro" />
+
+  <!-- Spawn a robot into Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model asc" output="screen"/>
+
+  <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" />
+
+
+
+
+
+
+
+
+
+    <include file="$(find asc_urdf)/launch/control.launch" />
+
+
+
+
+
+
+
+
+
+
+</launch>

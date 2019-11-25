@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asc_link">
+	<xacro:macro name="asc_wheel" params="x_size y_size z_size">
+	<geometry>
+	<box size="${ x_size} ${y_size} ${z_size}"/>
+	</geometry>
+	</xacro:macro>
+</robot>
+
