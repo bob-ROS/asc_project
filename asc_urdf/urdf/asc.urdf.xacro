@@ -74,7 +74,7 @@
       xyz="0.0 0.0 -0.16"
       rpy="0 0 0" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
   </xacro:asc_wheel_rear>
 
   <xacro:asc_wheel_rear wheel_prefix="left"
