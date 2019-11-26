@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="remote" default="true"/>
   <arg name="cartographer_mode" default="false"/>
 
   <include file="$(find asc_description)/launch/gazebo.launch"/>
@@ -18,6 +19,7 @@
 
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
-  <include file="$(find asc_navigation)/launch/move_base.launch" /> 
+  <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch" />
+  <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
 </launch>
 
