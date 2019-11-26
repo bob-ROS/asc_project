@@ -191,7 +191,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://zed_wrapper/urdf/models/ZED.stl"/>
+        <mesh filename="package://asc_description/meshes/ZED/ZED.stl"/>
       </geometry>
       <material name="light_grey">
         <color rgba="0.8 0.8 0.8 0.8"/>
