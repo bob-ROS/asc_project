@@ -1,11 +1,25 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="cartographer_mode" default="false"/>
+
   <include file="$(find asc_description)/launch/gazebo.launch"/>
   
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_sim.launch"/> 
+  <!-- launch rtab + zed node-->
+  <group unless="$(arg cartographer_mode)">
+    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_sim.launch"/> 
+  </group>
+
+  <!-- Run Cartographer Node -->
+  <group if="$(arg cartographer_mode)">
+    <include file="$(find asc_cartographer_navigation)/launch/cartographer_sim.launch"/> 
+  </group>
+
+
 
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
   <include file="$(find asc_navigation)/launch/move_base.launch" /> 
+
+
 </launch>
 

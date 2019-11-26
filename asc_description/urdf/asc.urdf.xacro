@@ -97,7 +97,7 @@
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>/</robotNamespace>
       <updateRate>50.0</updateRate>
-      <bodyName>base_link</bodyName>
+      <bodyName>os1_imu</bodyName>
       <topicName>imu/data</topicName>
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
@@ -171,11 +171,18 @@
   <!-- Add LiDAR -->
 
   <xacro:if value="${'$(arg simulation)' == 'true'}"> 
-    <!-- Add LiDAR for simulation-->
+    <!-- Add LiDAR for simulation, pretend it is the os1 LiDAR-->
     <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
     <VLP-16 parent="base_link" name="velodyne" topic="/os1_cloud_node/points" hz="10" samples="440" gpu="false">
       <origin xyz="0.063 0 0.53" rpy="0 0 0"/>
     </VLP-16>
+    <!-- connect the os1_sensor to share reference for simulated imu and real imu-->
+    <link name="os1_imu"/>
+        <joint name="base_to_os1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="velodyne"/>
+      <child link="os1_imu"/>
+    </joint>
   </xacro:if>
   <xacro:if value="${'$(arg simulation)' == 'false'}"> 
     <!-- Add LiDAR for real -->
