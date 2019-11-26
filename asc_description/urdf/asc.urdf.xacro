@@ -123,7 +123,7 @@
   </gazebo>
 
   <!-- add camera -->
-  <gazebo reference="camera_link">
+  <gazebo reference="zed_camera_center">
     <sensor type="depth" name="openni_camera_camera">
       <always_on>1</always_on>
       <visualize>true</visualize>
@@ -187,12 +187,12 @@
      </joint>
   </xacro:if>
    
-  <link name="camera_link"/>
+  <link name="zed_camera_center"/>
 
   <joint name="base_to_camera" type="fixed">
-    <origin xyz="1.2 0 0.6" rpy="0 0.1 0"/>
+    <origin xyz="0.142 0 0.54" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="camera_link"/>
+    <child link="zed_camera_center"/>
   </joint>
   <link name="camera_link_pc"/>
   <joint name="camera_to_pc" type="fixed">
