@@ -23,7 +23,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/base_link.STL"/>
+        <mesh filename="package://sc_description/meshes/base_link.STL"/>
       </geometry>
       <material name="">
         <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1"/>
@@ -33,7 +33,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/base_link.STL"/>
+        <mesh filename="package://sc_description/meshes/base_link.STL"/>
       </geometry>
     </collision> -->
   </link>
@@ -46,7 +46,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
+        <mesh filename="package://sc_description/meshes/left_front_steering_link.STL"/>
       </geometry>
       <material name="">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -55,7 +55,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
+        <mesh filename="package://sc_description/meshes/left_front_steering_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -100,7 +100,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
+        <mesh filename="package://sc_description/meshes/right_front_steering_link.STL"/>
       </geometry>
       <material name="">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -109,7 +109,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
+        <mesh filename="package://sc_description/meshes/right_front_steering_link.STL"/>
       </geometry>
     </collision>
   </link>
