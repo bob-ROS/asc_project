@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Load controller configuration -->
-  <rosparam command="load" file="$(find asc_urdf)/config/control.yaml"/>
+  <rosparam command="load" file="$(find asc_description)/config/control.yaml"/>
   <!-- Spawn controllers -->
   <node name="base_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/" args="asc_state_controller carlike_steering_controller"/>
   <!-- publish joint states -->

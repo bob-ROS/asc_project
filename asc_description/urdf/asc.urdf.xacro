@@ -1,5 +1,9 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asc">
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+  name="asc">
+
+  <xacro:arg name="simulation" default="true" />
+
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/</robotNamespace>
@@ -8,12 +12,21 @@
       <legacyModeNS>false</legacyModeNS>
     </plugin>
   </gazebo>
+  <xacro:include filename="macro_link.urdf.xacro"/>
+  <xacro:include filename="macro_wheel.urdf.xacro"/>
+
+  <xacro:property name="wheel_length" value="0.032"/>
+  <xacro:property name="wheel_radius" value="0.1"/>
+  <xacro:property name="wheel_parent" value="frame_link"/>
+
+
   <link name="base_link"/>
   <joint name="base_link_to_frame" type="fixed">
-    <origin xyz="0 0 0.7" rpy="0 0 0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="frame_link"/>
   </joint>
+
   <link name="frame_link">
     <inertial>
       <origin xyz="-0.191135074026536 0.00147037627768998 -0.144166350352701" rpy="0 0 0"/>
@@ -23,304 +36,69 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asc_description/meshes/base_link.STL"/>
+        <mesh filename="package://asc_description/meshes/base_link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1"/>
       </material>
     </visual>
-    <!--
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://asc_description/meshes/base_link.STL"/>
-      </geometry>
-    </collision> -->
   </link>
-  <link name="left_front_steering_link">
-    <inertial>
-      <origin xyz="-0.0439194980427094 -0.0123148656628935 -0.29574701698731" rpy="0 0 0"/>
-      <mass value="5.71439015182903"/>
-      <inertia ixx="0.138973038944984" ixy="0.00240438901312515" ixz="0.0320681563279578" iyy="0.160053837434921" iyz="-0.0109556260035955" izz="0.028546837728721"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://asc_description/meshes/left_front_steering_link.STL"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_front_steering_joint" type="revolute">
-    <origin xyz="0.9825 0.63618 0.047063" rpy="0.13546 -0.28749 0.0037802"/>
-    <parent link="frame_link"/>
-    <child link="left_front_steering_link"/>
-    <axis xyz="0 0 1"/>
-    <limit lower="-0.8" upper="0.9" effort="100" velocity="100"/>
-  </joint>
-  <link name="left_front_wheel_link">
-    <inertial>
-      <origin xyz="-2.26485497023532E-14 4.10782519111308E-14 0.00509989314954018" rpy="0 0 0"/>
-      <mass value="3.6905479088754"/>
-      <inertia ixx="0.117114266308146" ixy="-6.93889390390723E-18" ixz="1.02756637900478E-17" iyy="0.117114266308146" iyz="-3.62378420062206E-17" izz="0.227951064044091"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_front_wheel_joint" type="continuous">
-    <origin xyz="0.065693 0.065054 -0.50813" rpy="-1.8471 1.0585 -0.24589"/>
-    <parent link="left_front_steering_link"/>
-    <child link="left_front_wheel_link"/>
-    <axis xyz="0 0 1"/>
-  </joint>
-  <link name="right_front_steering_link">
-    <inertial>
-      <origin xyz="-0.0465182122250822 0.0145095544427134 -0.290619703564971" rpy="0 0 0"/>
-      <mass value="5.57746367002881"/>
-      <inertia ixx="0.138857493635095" ixy="-0.0022557465179349" ixz="0.032139397456901" iyy="0.160001336296301" iyz="0.0107272499121531" izz="0.0284811002523076"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://asc_description/meshes/right_front_steering_link.STL"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_front_steering_joint" type="revolute">
-    <origin xyz="0.9825 -0.63318 0.047063" rpy="-0.13546 -0.28749 0.0037802"/>
-    <parent link="frame_link"/>
-    <child link="right_front_steering_link"/>
-    <axis xyz="0 0 1"/>
-    <limit lower="-0.8" upper="0.8" effort="100" velocity="100"/>
-  </joint>
-  <link name="right_front_wheel_link">
-    <inertial>
-      <origin xyz="-1.02140518265514E-14 6.85007606193722E-14 0.00509989314946457" rpy="0 0 0"/>
-      <mass value="3.69054790887537"/>
-      <inertia ixx="0.117114266308143" ixy="1.38777878078145E-17" ixz="2.37549730750149E-18" iyy="0.117114266308143" iyz="3.40770700491441E-17" izz="0.22795106404409"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_front_wheel_joint" type="continuous">
-    <origin xyz="0.065291 -0.059582 -0.50741" rpy="1.8455 1.0552 0.23683"/>
-    <parent link="right_front_steering_link"/>
-    <child link="right_front_wheel_link"/>
-    <axis xyz="0 0 1"/>
-  </joint>
-  <!-- add fake rear steering joint-->
-  <link name="left_rear_steer">
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1"/>
-      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-    </inertial>
-  </link>
-  <joint name="left_rear_steering_joint" type="revolute">
-    <origin xyz="-1.3237 0.70906 -0.41261" rpy="0 0 0"/>
-    <parent link="frame_link"/>
-    <child link="left_rear_steer"/>
-    <axis xyz="0 0 1"/>
-    <limit lower="0" upper="0" effort="0" velocity="0"/>
-  </joint>
-  <link name="left_rear_wheel">
-    <inertial>
-      <origin xyz="8.43769498715119E-15 0.0589722640664191 -5.01820807130571E-14" rpy="0 0 0"/>
-      <mass value="3.68939811577995"/>
-      <inertia ixx="0.117113236563891" ixy="-4.42261767048626E-17" ixz="-6.93889390390723E-18" iyy="0.227950884881602" iyz="-3.11187820789416E-16" izz="0.117113236563891"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="1.57 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.57 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_rear_wheel_joint" type="continuous">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="left_rear_steer"/>
-    <child link="left_rear_wheel"/>
-    <axis xyz="0 1 0"/>
-  </joint>
-  <!-- add fake rear steering joint-->
-  <link name="right_rear_steer">
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1"/>
-      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-    </inertial>
-  </link>
-  <joint name="right_rear_steering_joint" type="revolute">
-    <origin xyz="-1.3237 -0.70606 -0.41261" rpy="0 0 0"/>
-    <parent link="frame_link"/>
-    <child link="right_rear_steer"/>
-    <axis xyz="0 0 1"/>
-    <limit lower="0" upper="0" effort="0" velocity="0"/>
-  </joint>
-  <link name="right_rear_wheel">
-    <inertial>
-      <origin xyz="7.99360577730113E-15 0.0589722640664192 4.2410519540681E-14" rpy="0 0 0"/>
-      <mass value="3.68939811577991"/>
-      <inertia ixx="0.117113236563893" ixy="-4.66966016159301E-17" ixz="4.33680868994202E-18" iyy="0.2279508848816" iyz="3.34438350256477E-16" izz="0.117113236563893"/>
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0" rpy="1.57 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.57 0 0"/>
-      <geometry>
-        <cylinder length="0.05" radius="0.3"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="right_rear_wheel_joint" type="continuous">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="right_rear_steer"/>
-    <child link="right_rear_wheel"/>
-    <axis xyz="0 1 0"/>
-  </joint>
-  <transmission name="tran1">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_rear_wheel_joint">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor1">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran2">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_rear_wheel_joint">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor2">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <!-- Transmissions for steering joints-->
-  <transmission name="tran3">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_front_steering_joint">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor3">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran4">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_front_steering_joint">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor4">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <!-- Transmissions for fake steering joints-->
-  <transmission name="tran5">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_rear_steering_joint">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor5">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran6">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_rear_steering_joint">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor6">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran7">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_front_wheel_joint">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor7">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="tran8">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_front_wheel_joint">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor8">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <!-- Sensors -->
+
+  <xacro:asc_wheel_front wheel_prefix="right"
+  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+    <origin
+      xyz="0.35635 -0.23074 0.27672"
+      rpy="0.29046 -0.12882 -1.6092" />
+    <origin
+      xyz="0.024 0.023741 -0.18704"
+      rpy="0.13981 0.28531 1.6105" />
+    <axis
+      xyz="5.3677E-05 1 0.00055924" />
+  </xacro:asc_wheel_front>
+
+  <xacro:asc_wheel_front wheel_prefix="left"
+  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+    <origin
+      xyz="0.35635 0.22966 0.274"
+      rpy="0.28907 0.00024223 -1.5707" />
+    <origin
+      xyz="-0.05 0.023546 -0.17951"
+      rpy="1.5963E-05 0.28907 1.5707" />
+    <axis
+      xyz="5.3677E-05 -1 0.00055924" />
+  </xacro:asc_wheel_front>
+
+  <xacro:asc_wheel_rear wheel_prefix="right"
+  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+  <origin
+  xyz="-0.48012 -0.29752 0.27"
+  rpy="0.0 0.0 0.0" />
+    <origin
+      xyz="0.0 0.0 -0.16"
+      rpy="0 0 0" />
+    <axis
+      xyz="0 1 0" />
+  </xacro:asc_wheel_rear>
+
+  <xacro:asc_wheel_rear wheel_prefix="left"
+  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
+  <origin
+  xyz="-0.48012 0.29752 0.27"
+  rpy="0.0 0.0 0.0" />
+      <origin
+      xyz="0.0 0.0 -0.16"
+      rpy="0 0 0" />
+    <axis
+      xyz="0 1 0" />
+  </xacro:asc_wheel_rear>
+
+
   <gazebo>
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>/</robotNamespace>
       <updateRate>50.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>imu/data</topicName>
-      <!--
-      <accelDrift>0.00 0.00 0.00</accelDrift>
-      <accelGaussianNoise>0.00 0.00 0.00</accelGaussianNoise>
-      <rateDrift>0.0 0.000.0 </rateDrift>
-      <rateGaussianNoise>0.00 0.005 0.00 </rateGaussianNoise>
-      <headingDrift>0.00</headingDrift>
-      <headingGaussianNoise>0.00</headingGaussianNoise> -->
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
       <rateDrift>0.005 0.005 0.005 </rateDrift>
@@ -328,30 +106,7 @@
       <headingDrift>0.005</headingDrift>
       <headingGaussianNoise>0.005</headingGaussianNoise>
     </plugin>
-    <!-- for calculating perfect odometry -->
-    <!--
-    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>1.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <topicName>odom_perfect_world</topicName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <frameName>world</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
-    </plugin>
-    <link name="odom"/>
-    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>1.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <topicName>odom_perfect</topicName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <frameName>odom</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
-    </plugin> -->
-    <!-- add gps -->
+
     <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
       <robotNamespace>/</robotNamespace>
       <updateRate>40</updateRate>
@@ -413,6 +168,25 @@
       </plugin>
     </sensor>
   </gazebo>
+  <!-- Add LiDAR -->
+
+  <xacro:if value="${'$(arg simulation)' == 'true'}"> 
+    <!-- Add LiDAR for simulation-->
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <VLP-16 parent="base_link" name="velodyne" topic="/os1_cloud_node/points" hz="10" samples="440" gpu="false">
+      <origin xyz="0.063 0 0.54" rpy="0 0 0"/>
+    </VLP-16>
+  </xacro:if>
+  <xacro:if value="${'$(arg simulation)' == 'false'}"> 
+    <!-- Add LiDAR for real -->
+      <link name="os1_sensor"/>
+     <joint name="base_to_os1" type="fixed">
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <parent link="base_link"/>
+       <child link="os1_sensor"/>
+     </joint>
+  </xacro:if>
+   
   <link name="camera_link"/>
 
   <joint name="base_to_camera" type="fixed">
@@ -426,9 +200,51 @@
     <parent link="camera_link"/>
     <child link="camera_link_pc"/>
   </joint>
-  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <VLP-16 parent="base_link" name="velodyne" topic="/os1_cloud_node/points" hz="10" samples="440" gpu="false">
-    <origin xyz="-0.45 0 1.15" rpy="0 0 0"/>
-  </VLP-16>
-</robot>
+  <!--
+  <joint name="zed_camera_center_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="zed_camera_center"/>
+    <origin xyz="0.16 0 0.07" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_camera_center">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://zed_wrapper/urdf/models/ZED.stl"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 0.8"/>
+      </material>
+    </visual>
+  </link> -->
+  
+  <!-- Left Camera --> <!--
+  <joint name="zed_left_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_left_camera_frame"/>
+    <origin xyz="0 0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_left_camera_frame"/>
+  <joint name="zed_left_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_left_camera_frame"/>
+    <child link="zed_left_camera_optical_frame"/>
+  </joint>
+  <link name="zed_left_camera_optical_frame"/> -->
+  <!-- Right Camera --> <!--
+  <joint name="zed_right_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_right_camera_frame"/>
+    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_right_camera_frame"/>
+  <joint name="zed_right_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_right_camera_frame"/>
+    <child link="zed_right_camera_optical_frame"/>
+  </joint>
+  <link name="zed_right_camera_optical_frame"/> -->
 
+
+
+</robot>

@@ -19,10 +19,14 @@
   
   
 
-  <!--      General					-->
+  <!-- General -->
   <group>
     <!-- TF publisher-->
-    <param name="/robot_description" command="$(find xacro)/xacro --inorder '$(find asc_description)/urdf/mast.urdf.xacro'"/>
+
+    <param name="/robot_description" command="$(find xacro)/xacro '$(find asc_description)/urdf/asc.urdf.xacro'
+      --inorder 
+      simulation:=false
+    "/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
       <remap from="/joint_states" to="/joint_states"/>
     </node>
@@ -38,9 +42,9 @@
   
   
   
-  <!--        ZED					-->
+  <!-- ZED -->
   <group if="$(arg use_zed)">
-    <!-- scan converting from ZED  -->
+    <!-- scan converting from ZED -->
     <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" if="$(eval arg('scan_mode') == 1)">
       <remap from="image"       to="/zed/zed_node/depth/depth_registered"/>
       <remap from="camera_info" to="/zed/zed_node/depth/camera_info"/>
@@ -114,7 +118,9 @@
     </node>
     
     <!-- lidar position os1_sensor-->
+    <!-- this has been moved to the urdf
     <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+    -->
   </group>
 
 
