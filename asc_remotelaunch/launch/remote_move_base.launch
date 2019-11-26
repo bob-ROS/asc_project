@@ -1,5 +1,5 @@
 <launch>
-  <machine name="nuc" address="nuc" env-loader="~/catkin_ws/env.sh" user="nuc" password="nuc"/>
+  <machine name="nuc" address="NUC" env-loader="~/catkin_ws/env.sh" user="nuc" password="nuc"/>
 
   <arg name="no_static_map" default="false"/>
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
