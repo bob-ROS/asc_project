@@ -6,6 +6,9 @@
 
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
-  <include file="$(find asc_navigation)/launch/move_base.launch" /> 
+<!--  
+<include file="$(find asc_navigation)/launch/move_base.launch" /> 
+-->
+  <include file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
 </launch>
 
