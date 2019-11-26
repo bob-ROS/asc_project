@@ -9,7 +9,10 @@ for running real robot:
 
 `roslaunch asc_autorun run_real.launch use_move_base:=true`
 
-How we used ouster_ros package. 
+How we used ouster_ros package.
+
 A) Fixed frame name to \ouster_sensor to ouster_sensor. Tf can't handle the backslash in the header.
-B) Opened firewall using gufw.
+
+B) Opened firewall using gufw to recieve messages from LiDAR.
+
 C) Rewrote stamp to header.stamp = ros::Time::now();
