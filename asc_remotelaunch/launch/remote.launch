@@ -1,7 +1,0 @@
-<launch>
-
-
-    <machine name="ALBERT" address="abb" env-loader="~/catkin_ws/env.sh" user="abbe" password="123"/>
-    <node machine="ALBERT" name="talker" pkg="rospy_tutorials" type="talker.py" />
-
-</launch>
