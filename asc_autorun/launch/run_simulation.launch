@@ -2,8 +2,11 @@
 <launch>
   <arg name="remote" default="false"/>
   <arg name="cartographer_mode" default="false"/>
+  <arg name="empty_map" default="true"/>
 
-  <include file="$(find asc_description)/launch/gazebo.launch"/>
+  <include file="$(find asc_description)/launch/gazebo.launch">
+    <arg name="empty_map" value="$(arg empty_map)"/>
+  </include>
   
   <!-- launch rtab + zed node-->
   <group unless="$(arg cartographer_mode)">
