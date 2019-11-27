@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+  <arg name="empty_map" default="true"/>
+
+
+
+  <include if="$(arg empty_map)" file="$(find gazebo_ros)/launch/empty_world.launch"/>
+  
+  <include unless="$(arg empty_map)" file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find asc_simulation)/worlds/w1.world"/>
+  </include>
+
   <node name="tf_footprint_base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link base_footprint 40"/>
   <!-- Load PID config for the joints -->
   <rosparam file="$(find asc_description)/config/gazebo_ros_control_params.yaml" command="load"/>
