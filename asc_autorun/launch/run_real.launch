@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="use_lidar" default="true"/>
-  <arg name="use_zed" default="true"/>
+  <arg name="use_lidar" default="true"/> <!-- currently does not support this being false!-->
+  <arg name="use_zed" default="true"/> <!-- currently does not support this being false!-->
   <arg name="localization_mode" default="false"/>
   <arg name="use_move_base" default="false"/>
 
-  <arg name="cartographer_mode" default="false"/>
+  <arg name="cartographer_mode" default="false"/> <!-- will use rtabmap by default -->
   
  
   <!--  Make sure you enable corresponding unit first  -->
@@ -44,6 +44,16 @@
   
   <!-- ZED -->
   <group if="$(arg use_zed)">
+    <group ns="zed">
+    <!-- ZED Wrapper Node-->
+    <include file="$(find zed_wrapper)/launch/zed_camera.launch">
+      <arg name="svo_file" value=""/>
+      <arg name="node_name" value="zed_node"/>
+      <arg name="camera_model" value="zed"/>
+      <arg name="publish_urdf" value="false"/>
+    </include>
+  </group>
+  <!-- 'zed' or 'zedm' -->
     <!-- scan converting from ZED -->
     <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" if="$(eval arg('scan_mode') == 1)">
       <remap from="image"       to="/zed/zed_node/depth/depth_registered"/>
@@ -124,7 +134,7 @@
   </group>
 
 
-<group unless="$(arg cartographer_mode)">
+<group unless="$(arg cartographer_mode)"> 
   <!-- launch rtab + zed node-->
   <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">
     <arg name="visualize" value="false"          />

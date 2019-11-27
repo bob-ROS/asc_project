@@ -5,7 +5,9 @@
 
   <arg name="publish_urdf" default="false"/>
   <arg name="visualize" default="false"/>
+  <arg name="visualize_rtabmapviz" default="false"/>
   <arg name="use_scan" default="false"/>
+  <arg name="use_scan_cloud" default="false"/>
   <!-- run rtab-->
   <group ns="rtabmap">
     <!-- Use RGBD synchronization -->
@@ -48,7 +50,7 @@
       <param name="Icp/VoxelSize" type="string" value="0.05"/>
       <param name="Icp/MaxCorrespondenceDistance" type="string" value="0.1"/>
     </node>
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/config/rtabmap.rviz" output="screen"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/config/rtabmap.rviz" output="screen" if="$(arg visualize)"/>
     <!-- Construct and voxelize the point cloud (for fast visualization in rviz) -->
     <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
       <remap from="rgbd_image" to="/rtabmap/rgbd_image/compressed"/>
@@ -57,60 +59,23 @@
       <param name="voxel_size" type="double" value="0.01"/>
     </node>
     <!-- Visualisation RTAB-Map -->
-    <!--
-    <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen">
+    <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen" if="$(arg visualize_rtabmapviz)">
       <param name="subscribe_depth" type="bool" value="true"/>
-      <param name="subscribe_scan" type="bool" value="true"/>
+      <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
+      <!--
+      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>-->
       <param name="frame_id" type="string" value="base_link"/>
       <param name="wait_for_transform" type="bool" value="true"/>
       <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
       <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
       <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
       <remap from="scan" to="/scan"/>
-      <remap from="odom" to="/odometry/filtered"/>
-    </node>-->
+      <remap from="odom" to="/$(arg zed_namespace)/$(arg zed_node_name)/odom"/>
+    </node>
   </group> 
-  <!-- Launch move_base + pointcloud_to_scan -->
- <!--
- <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
-    <remap from="scan_cloud"             to="/os1_cloud_node/points"/> 
-     <remap from="scan"      to="/scan"/>
-     <remap from="odom"      to="/icp_odom"/>
-     <remap from="odom_info"      to="/rtabmap/odom_info"/>
-	  
-     <param name="frame_id"        type="string" value="base_link"/>   
-     
-     <param name="Icp/PointToPlane"  type="string" value="true"/>
-     <param name="Icp/VoxelSize"     type="string" value="0.05"/>
-     <param name="Icp/Epsilon"       type="string" value="0.001"/>
-     <param name="Icp/PointToPlaneK"  type="string" value="5"/>
-     <param name="Icp/PointToPlaneRadius"  type="string" value="0.3"/>
-     <param name="Icp/MaxCorrespondenceDistance" type="string" value="0.1"/> 
-     <param name="Icp/PM"             type="string" value="true"/> --><!-- use libpointmatcher to handle PointToPlane with 2d scans--> <!--
-     <param name="Icp/PMOutlierRatio" type="string" value="0.95"/>
-     <param name="Odom/Strategy"        type="string" value="0"/>
-     <param name="Odom/GuessMotion"     type="string" value="true"/>
-     <param name="Odom/ResetCountdown"  type="string" value="0"/>
-     <param name="Odom/ScanKeyFrameThr"  type="string" value="0.9"/>
-  </node> -->
    <!-- start EKF etc-->
    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
   </node>   
-  <!-- Visualisation RVIZ -->
-  <!--
-    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find asc_rtabmap_navigation)/config/demo_robot_mapping.rviz" output="screen"/>
-   <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
-    <remap from="rgb/image"       to="/data_throttled_image"/>
-    <remap from="depth/image"     to="/data_throttled_image_depth"/>
-    <remap from="rgb/camera_info" to="/data_throttled_camera_info"/>
-    <remap from="cloud"           to="voxel_cloud" />
-    
-    <param name="rgb/image_transport"   type="string" value="compressed"/>
-    <param name="depth/image_transport" type="string" value="compressedDepth"/>
-    
-    <param name="queue_size" type="int" value="10"/>
-    <param name="voxel_size" type="double" value="0.01"/>
-  </node> -->
 </launch>
 
