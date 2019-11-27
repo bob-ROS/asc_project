@@ -4,3 +4,9 @@
 [submodule "navfn_subgoals"]
 	path = navfn_subgoals
 	url = https://github.com/bob-ROS/navfn_subgoals
+[submodule "dependencies/navfn_subgoals"]
+	path = dependencies/navfn_subgoals
+	url = https://github.com/bob-ROS/navfn_subgoals
+[submodule "dependencies/four_wheel_carlike_steering_controller"]
+	path = dependencies/four_wheel_carlike_steering_controller
+	url = https://github.com/bob-ROS/four_wheel_carlike_steering_controller
