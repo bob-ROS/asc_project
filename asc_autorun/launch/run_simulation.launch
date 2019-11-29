@@ -3,14 +3,21 @@
   <arg name="remote" default="false"/>
   <arg name="cartographer_mode" default="false"/>
   <arg name="empty_map" default="true"/>
+  <arg name="if_visualize" default="true"/>
+  <arg name="if_visualize_rtabmapviz" default="false"/>
 
   <include file="$(find asc_description)/launch/gazebo.launch">
     <arg name="empty_map" value="$(arg empty_map)"/>
   </include>
-  
+
   <!-- launch rtab + zed node-->
   <group unless="$(arg cartographer_mode)">
-    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_sim.launch"/> 
+    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_sim.launch"> 
+      <arg name="visualize" value="$(arg if_visualize)"/>
+      <arg name="visualize_rtabmapviz" value="$(arg if_visualize_rtabmapviz)"/>
+      <arg name="use_scan" value="false"/>
+      <arg name="use_scan_cloud" value="true"/>
+    </include>
   </group>
 
   <!-- Run Cartographer Node -->
@@ -23,7 +30,10 @@
   <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch" />
   <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
 
-  <!-- start EKF for localization-->
+   <!-- start EKF etc-->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
+  </node>   
   
 </launch>
 

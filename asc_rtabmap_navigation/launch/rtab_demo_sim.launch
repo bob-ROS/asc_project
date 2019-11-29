@@ -6,7 +6,7 @@
   <arg name="publish_urdf" default="false"/>
   <arg name="visualize" default="false"/>
   <arg name="visualize_rtabmapviz" default="false"/>
-  <arg name="use_scan" default="false"/>
+  <arg name="use_scan" default="true"/>
   <arg name="use_scan_cloud" default="false"/>
   <!-- run rtab-->
   <group ns="rtabmap">
@@ -30,9 +30,11 @@
       <param name="subscribe_depth" type="bool" value="false"/>
       <param name="subscribe_rgb" type="bool" value="false"/>
       <param name="subscribe_rgbd" type="bool" value="true"/>
-      <param name="subscribe_scan" type="bool" value="true"/>
+      <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
+      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
       <remap from="odom" to="/odometry/filtered"/>
       <remap from="scan" to="/scan"/>
+      <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <remap from="rgbd_image" to="rgbd_image"/>
       <param name="queue_size" type="int" value="10"/>
       <!-- RTAB-Map's parameters -->
@@ -62,8 +64,7 @@
     <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen" if="$(arg visualize_rtabmapviz)">
       <param name="subscribe_depth" type="bool" value="true"/>
       <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
-      <!--
-      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>-->
+      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
       <param name="frame_id" type="string" value="base_link"/>
       <param name="wait_for_transform" type="bool" value="true"/>
       <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
@@ -72,10 +73,6 @@
       <remap from="scan" to="/scan"/>
       <remap from="odom" to="/$(arg zed_namespace)/$(arg zed_node_name)/odom"/>
     </node>
-  </group> 
-   <!-- start EKF etc-->
-   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
-  </node>   
+  </group>   
 </launch>
 
