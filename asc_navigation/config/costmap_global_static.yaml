@@ -5,6 +5,6 @@ track_unknown_space: true
 width: 2000.0
 height: 2000.0
 plugins:
-  - {name: static,                  type: "costmap_2d::StaticLayer"}
-  - {name: inflation,               type: "costmap_2d::InflationLayer"}
+  - {name: static_layer,                  type: "costmap_2d::StaticLayer"}
+  - {name: inflation_layer,               type: "costmap_2d::InflationLayer"}
 

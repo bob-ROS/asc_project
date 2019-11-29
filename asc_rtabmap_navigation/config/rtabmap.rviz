@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1/Frames1
-        - /Map3
       Splitter Ratio: 0.411058009
     Tree Height: 614
   - Class: rviz/Selection
@@ -105,7 +104,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Points
-      Topic: /jn0/base_scan
+      Topic: /scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -115,37 +114,41 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_link:
+        base_footprint:
           Value: true
-        camera_link:
+        base_link:
           Value: true
         camera_link_pc:
           Value: true
         frame_link:
           Value: true
-        left_front_steering_link:
+        front_left_steering_link:
           Value: true
-        left_front_wheel_link:
+        front_left_wheel_link:
           Value: true
-        left_rear_steer:
+        front_right_steering_link:
           Value: true
-        left_rear_wheel:
+        front_right_wheel_link:
           Value: true
         map:
           Value: true
         odom:
           Value: true
-        right_front_steering_link:
+        os1_imu:
           Value: true
-        right_front_wheel_link:
+        rear_left_steering_link:
           Value: true
-        right_rear_steer:
+        rear_left_wheel_link:
           Value: true
-        right_rear_wheel:
+        rear_right_steering_link:
+          Value: true
+        rear_right_wheel_link:
           Value: true
         velodyne:
           Value: true
         velodyne_base_link:
+          Value: true
+        zed_camera_center:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -156,24 +159,27 @@ Visualization Manager:
         map:
           odom:
             base_link:
-              camera_link:
-                camera_link_pc:
-                  {}
+              base_footprint:
+                {}
               frame_link:
-                left_front_steering_link:
-                  left_front_wheel_link:
+                front_left_steering_link:
+                  front_left_wheel_link:
                     {}
-                left_rear_steer:
-                  left_rear_wheel:
+                front_right_steering_link:
+                  front_right_wheel_link:
                     {}
-                right_front_steering_link:
-                  right_front_wheel_link:
+                rear_left_steering_link:
+                  rear_left_wheel_link:
                     {}
-                right_rear_steer:
-                  right_rear_wheel:
+                rear_right_steering_link:
+                  rear_right_wheel_link:
                     {}
               velodyne_base_link:
                 velodyne:
+                  os1_imu:
+                    {}
+              zed_camera_center:
+                camera_link_pc:
                   {}
       Update Interval: 0
       Value: true
@@ -270,10 +276,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         camera_link_pc:
           Alpha: 1
           Show Axes: false
@@ -283,40 +285,44 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        left_front_steering_link:
+        front_left_steering_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_front_wheel_link:
+        front_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_rear_steer:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_rear_wheel:
+        front_right_steering_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_front_steering_link:
+        front_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_front_wheel_link:
+        os1_imu:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rear_left_steering_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        rear_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_rear_steer:
+        rear_right_steering_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        right_rear_wheel:
+        rear_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -327,6 +333,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         velodyne_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        zed_camera_center:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -364,22 +375,22 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Map
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 0.699999988
       Class: rviz/Map
       Color Scheme: raw
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Map
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -470,25 +481,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 33.9257545
+      Distance: 3.86131191
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.75673306
-        Y: -0.871301651
-        Z: 5.40479803
+        X: 3.07935882
+        Y: 3.1031177
+        Z: 1.44560838
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.774795532
+      Pitch: 0.324795485
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 4.91826487
+      Yaw: 0.570081055
     Saved: ~
 Window Geometry:
   Displays:
