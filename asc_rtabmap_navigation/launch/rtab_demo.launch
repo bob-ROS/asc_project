@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="zed_namespace" default="zed"/>
+  <arg name="zed_node_name" default="zed_node"/>
 
-  <arg name="visualize" default="true"/>
+  <arg name="odom_node" default="/odometry/filtered"/>
+
+  <arg name="publish_urdf" default="false"/>
+  <arg name="visualize" default="false"/>
+  <arg name="visualize_rtabmapviz" default="false"/>
   <arg name="use_scan" default="true"/>
-  <!-- use scan or scan_cloud-->
   <arg name="use_scan_cloud" default="false"/>
-
   <!-- run rtab-->
   <group ns="rtabmap">
     <!-- Use RGBD synchronization -->
@@ -13,9 +17,9 @@
          but it is recommended to attach this nodelet to nodelet 
          manager of the camera to avoid topic serialization -->
     <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
-      <remap from="rgb/image" to="/zed/zed_node/rgb/image_rect_color"/>
-      <remap from="depth/image" to="/zed/zed_node/depth/depth_registered"/>
-      <remap from="rgb/camera_info" to="/zed/zed_node/rgb/camera_info"/>
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
       <remap from="rgbd_image" to="rgbd_image"/>
       <!-- output -->
       <!-- Should be true for not synchronized camera topics 
@@ -30,11 +34,11 @@
       <param name="subscribe_rgbd" type="bool" value="true"/>
       <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
       <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
-      <remap from="odom" to="/zed/zed_node/odom"/>
+      <remap from="odom" to="$(arg odom_node)"/>
       <remap from="scan" to="/scan"/>
       <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <remap from="rgbd_image" to="rgbd_image"/>
-      <param name="queue_size" type="int" value="100"/>
+      <param name="queue_size" type="int" value="10"/>
       <remap from="gps/fix" to="/fix"/>
 
       <!-- RTAB-Map's parameters -->
@@ -59,33 +63,22 @@
     <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
       <remap from="rgbd_image" to="/rtabmap/rgbd_image/compressed"/>
       <remap from="cloud" to="/rtabmap/cloud_map"/>
-      <param name="queue_size" type="int" value="100"/>
+      <param name="queue_size" type="int" value="10"/>
       <param name="voxel_size" type="double" value="0.01"/>
     </node>
     <!-- Visualisation RTAB-Map -->
-    <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen" if="$(arg visualize)">
+    <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen" if="$(arg visualize_rtabmapviz)">
       <param name="subscribe_depth" type="bool" value="true"/>
       <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
       <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
       <param name="frame_id" type="string" value="base_link"/>
       <param name="wait_for_transform" type="bool" value="true"/>
-      <remap from="rgb/image" to="/zed/zed_node/rgb/image_rect_color"/>
-      <remap from="depth/image" to="/zed/zed_node/depth/depth_registered"/>
-      <remap from="rgb/camera_info" to="/zed/zed_node/rgb/camera_info"/>
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
       <remap from="scan" to="/scan"/>
-      <remap from="odom" to="/zed/zed_node/odom"/>
+      <remap from="odom" to="$(arg odom_node)"/>
     </node>
   </group>
-  <!-- Launch move_base + pointcloud_to_scan -->
-  <!-- start EKF-->
-  <!--
-   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
-    <remap from="odometry/filtered" to="odometry/filtered"/>
-  </node> -->
-  <!-- start move_base-->
-  <!--
-  <include file="$(find asc_navigation)/launch/move_base.launch"/>
- -->
 </launch>
 
