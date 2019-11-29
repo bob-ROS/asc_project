@@ -5,7 +5,6 @@
 
   <arg name="odom_node" default="/odometry/filtered"/>
 
-  <arg name="publish_urdf" default="false"/>
   <arg name="visualize" default="false"/>
   <arg name="visualize_rtabmapviz" default="false"/>
   <arg name="use_scan" default="true"/>

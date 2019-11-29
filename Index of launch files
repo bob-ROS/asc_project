@@ -68,13 +68,6 @@ asc_rtabmap_navigation
 		visualize		:	"true"
 		use_scan		:	"true"
 		use_scan_cloud	:	"false"
-		
-	rtab_demo_sim # Rtab for running in simulation
-		zed_namespace	:	"zed"
-		zed_node_name	:	"zed_node"
-		publish_urdf	:	"false"
-		visualize		:	"false"
-		use_scan		:	"false"
 
 asc_twist_mux
 
