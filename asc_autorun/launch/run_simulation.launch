@@ -12,7 +12,10 @@
 
   <!-- launch rtab + zed node-->
   <group unless="$(arg cartographer_mode)">
-    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_sim.launch"> 
+    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch"> 
+
+      <arg name="odom_node" default="/odometry/filtered"/>
+
       <arg name="visualize" value="$(arg if_visualize)"/>
       <arg name="visualize_rtabmapviz" value="$(arg if_visualize_rtabmapviz)"/>
       <arg name="use_scan" value="false"/>

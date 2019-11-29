@@ -1,0 +1,78 @@
+asc_autorun
+
+	run_real 			# One launchfile for starting everything required
+	  use_lidar			:	"true"
+	  use_zed			:	"true"
+	  localization_mode	:	"false"
+	  use_move_base		:	"false"
+	  cartographer_mode	:	"false"
+	  scan_mode			:	"2"
+	
+	run_lidar_only 		# Starts run_real with lidar only 
+	
+	run_zed_only 		# Starts run_real with zed only 
+	
+	
+	
+	run_simulation		# Runs the selected model in gazebo, with every required node
+		model			:	"asc"	#asc/solarcar
+		move_base 		: 	"asc"	#asc/solarcar/mast
+		slam_method		: 	"rtab"	#rtab/cart
+
+
+asc_cartographer
+
+	cartographer_real 	# Runs cartographer together with lidar and zed
+		config_lua		:	"asc_real.lua"
+		use_viz			:	"false"
+	  	use_move_base	:	"false"
+	  	starting_lidar	:	"true"
+	  	starting_gps	:	"true"
+		svo_file		:	""
+		zed_node_name	:	"zed_node"
+		camera_model	:	"zed"
+		publish_urdf	:	"false"
+		zed_namespace	:	"zed"
+  
+	cartographer_simulation # Runs cartographer in a simulated enviroment
+		config_lua		:	"asc_real.lua"
+	
+	play_bag
+		config_lua		:	"asc_real.lua"
+		bag_filename	:	"/home/nvidia/bagfiles/session1.bag"
+
+asc_control
+-none-
+
+asc_description
+-none-
+
+asc_navigation
+
+	move_base # Launches the configured steering node movebase
+		no_static_map	:	"false"
+		base_global_planner	:	"navfn/NavfnROS"
+		base_local_planner	:	"teb_local_planner/TebLocalPlannerROS"
+		odom_topic	:	"zed/zed_node/odom"
+		
+	pointcloud_to_laserscan # Converts pointcloud data from lidar (or similare) to laserscan
+	
+asc_rtabmap_navigation
+
+	rtab_demo # Runs rtab together with lidar and zed
+		zed_namespace	:	"zed"
+		svo_file		:	""
+		zed_node_name	:	"zed_node"
+		camera_model	:	"zed"
+		publish_urdf	:	"false"
+		visualize		:	"true"
+		use_scan		:	"true"
+		use_scan_cloud	:	"false"
+
+asc_twist_mux
+
+	twist_mux # Allows two cmd_vel to publish on the same topic
+		cmd_vel_out		:	"carlike_steering_controller/cmd_vel"
+		config_locks	:	"$(find asc_twist_mux)/config/twist_mux_locks.yaml"
+		config_topics	:	"$(find asc_twist_mux)/config/twist_mux_topics.yaml"
+		
