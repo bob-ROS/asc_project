@@ -1,0 +1,8 @@
+<library path="lib/libasc_rviz_plugin">
+
+  <class name="rviz/PublishPos" type="rviz::PublishPosTool" base_class_type="rviz::Tool">
+    <description>
+      Tool for broadcasting positions on the ground plane in rviz.
+    </description>
+  </class>
+</library>
