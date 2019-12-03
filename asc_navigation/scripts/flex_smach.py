@@ -57,7 +57,7 @@ def main():
             ),
             transitions={
                 'succeeded': 'EXE_PATH',
-                'aborted': 'WAIT_FOR_GOAL',
+                'aborted': 'EXE_PATH',
                 'preempted': 'preempted'
             },
             remapping={
