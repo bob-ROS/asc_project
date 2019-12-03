@@ -1,0 +1,27 @@
+<package>
+  <name>asc_rviz_plugin</name>
+  <version>1.0.0</version>
+  <description>
+     Plugin for rviz, used to publish a position. Based on rviz initial_pose_tool
+  </description>
+  <maintainer email="albert.k.bergstrom@hotmail.com">Albert Bergström</maintainer>
+  <license>ASC</license>
+
+  <url>http://ros.org/wiki/asc_rviz_plugin</url>
+  <author>Albert Bergström</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>qtbase5-dev</build_depend>
+  <build_depend>rviz</build_depend>
+
+  <run_depend>libqt5-core</run_depend>
+  <run_depend>libqt5-gui</run_depend>
+  <run_depend>libqt5-widgets</run_depend>
+  <run_depend>rviz</run_depend>
+
+  <export>
+      <rosdoc config="${prefix}/rosdoc.yaml"/>
+      <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>
