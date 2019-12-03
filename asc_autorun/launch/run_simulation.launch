@@ -5,6 +5,7 @@
   <arg name="empty_map" default="true"/>
   <arg name="if_visualize" default="true"/>
   <arg name="if_visualize_rtabmapviz" default="false"/>
+  <arg name="use_move_base" default="true"/>
 
   <include file="$(find asc_description)/launch/gazebo.launch">
     <arg name="empty_map" value="$(arg empty_map)"/>
@@ -28,10 +29,11 @@
 
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
-  <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base_flex.launch" />
-  <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
-
-  <!-- Start EKF etc -->
+  <group if="$(arg use_move_base)">
+    <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch" />
+    <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
+  </group>
+   <!-- start EKF etc-->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
   </node>   
