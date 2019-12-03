@@ -49,6 +49,7 @@
       <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
       <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>
 
+      <param name="Grid/RayTracing=true" type="string" value="true"/>
       <param name="Grid/FromDepth" type="string" value="true"/>
       <!-- occupancy grid from lidar -->
       <param name="Reg/Force3DoF" type="string" value="true"/>

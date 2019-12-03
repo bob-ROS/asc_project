@@ -4,12 +4,13 @@
   <arg name="odom_topic" default="zed/zed_node/odom"/>
   <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find asc_navigation)/config/move_base_flex_cfg/planners.yaml" command="load" />
+    <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/move_base_flex_cfg/controllers.yaml" command="load" />
     <rosparam file="$(find asc_navigation)/config/teb_local_planner_params.yaml" command="load"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_local.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap"/>
     <param name="planner_frequency" value="1.0"/>
     <param name="planner_patience" value="6.0"/>
     <param name="controller_frequency" value="5.0"/>
@@ -17,7 +18,6 @@
     <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
     <remap from="cmd_vel" to="/cmd_vel_move"/>
   </node>
-  <!-- Something for calling move_base_flex, remember to chmod +x flex_smach.py -->
-  <!--
-  <node pkg="asc_navigation" type="flex_smach.py" name="move_base_flex_action" output="screen"/>-->
+  <!-- Something for calling move_base_flex, remember to chmod +x flex_smach.py before using this-->
+  <node pkg="asc_navigation" type="flex_smach.py" name="move_base_flex_action" output="screen"/>
 </launch>

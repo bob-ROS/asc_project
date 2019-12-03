@@ -16,7 +16,7 @@ PublishPosTool::PublishPosTool()
 {
   shortcut_key_ = 'p';
 
-  topic_property_ = new StringProperty( "Topic", "publish_pos",
+  topic_property_ = new StringProperty( "Topic", "subgoal_pose",
                                         "The topic on which to publish pose.",
                                         getPropertyContainer(), SLOT( updateTopic() ), this );
   std_dev_x_ = new FloatProperty("X std deviation", 0.5, "X standard deviation for initial pose [m]", getPropertyContainer());

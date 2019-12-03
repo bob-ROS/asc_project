@@ -1,0 +1,10 @@
+global_frame: map
+robot_base_frame: base_link
+update_frequency: 1
+publish_frequency: 1
+static_map: false
+rolling_window: true
+width: 70.0
+height: 70.0
+plugins:
+- {name: rgbd_obstacle_layer, type: "spatio_temporal_voxel_layer/SpatioTemporalVoxelLayer"}
