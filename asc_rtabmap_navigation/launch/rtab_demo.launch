@@ -39,6 +39,7 @@
       <remap from="rgbd_image" to="rgbd_image"/>
       <param name="queue_size" type="int" value="10"/>
       <remap from="gps/fix" to="/fix"/>
+      <remap from="grid_map" to="/map"/>
 
       <!-- RTAB-Map's parameters -->
       <param name="RGBD/NeighborLinkRefining" type="string" value="true"/>
@@ -48,7 +49,7 @@
       <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
       <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>
 
-      <param name="Grid/FromDepth" type="string" value="false"/>
+      <param name="Grid/FromDepth" type="string" value="true"/>
       <!-- occupancy grid from lidar -->
       <param name="Reg/Force3DoF" type="string" value="true"/>
       <param name="Reg/Strategy" type="string" value="1"/>

@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="no_static_map" default="false"/>
-  <arg name="base_global_planner" default="navfn/NavfnROS"/>
-  <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
   <arg name="odom_topic" default="zed/zed_node/odom"/>
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <param name="base_global_planner" value="$(arg base_global_planner)"/>
-    <param name="base_local_planner" value="$(arg base_local_planner)"/>
+  <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find asc_navigation)/config/move_base_flex_cfg/planners.yaml" command="load" />
+    <rosparam file="$(find asc_navigation)/config/move_base_flex_cfg/controllers.yaml" command="load" />
     <rosparam file="$(find asc_navigation)/config/teb_local_planner_params.yaml" command="load"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
@@ -19,5 +17,7 @@
     <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
     <remap from="cmd_vel" to="/cmd_vel_move"/>
   </node>
+  <!-- Something for calling move_base_flex, remember to chmod +x flex_smach.py -->
+  <!--
+  <node pkg="asc_navigation" type="flex_smach.py" name="move_base_flex_action" output="screen"/>-->
 </launch>
-
