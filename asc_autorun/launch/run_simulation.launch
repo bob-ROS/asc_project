@@ -30,7 +30,7 @@
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
   <include file="$(find asc_twist_mux)/launch/twist_mux.launch"/>
   <group if="$(arg use_move_base)">
-    <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch" />
+    <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base_flex.launch" />
     <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
   </group>
    <!-- start EKF etc-->
