@@ -1,32 +1,30 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="frame_id" default="os1_lidar"/>
-  <arg name="rtabmapviz"    default="true"/>
-  <arg name="scan_20_hz"    default="false"/>
-  <arg name="use_sim_time"  default="true"/>
-  <param if="$(arg use_sim_time)" name="use_sim_time" value="true"/>
-  <arg name="left_image_topic"  default="/front_zed/left/image_rect_color"/>
-  <arg name="right_image_topic"  default="/front_zed/right/image_rect_color"/>
-  <arg name="left_camera_info_topic"  default="/front_zed/left/camera_info"/>
-  <arg name="right_camera_info_topic"  default="/front_zed/left/camera_info"/>
-
   <arg name="zed_namespace" default="zed"/>
   <arg name="zed_node_name" default="zed_node"/>
+
   <arg name="odom_node" default="/odometry/filtered"/>
+
   <arg name="visualize" default="false"/>
   <arg name="visualize_rtabmapviz" default="false"/>
   <arg name="use_scan" default="true"/>
   <arg name="use_scan_cloud" default="false"/>
-  
+  <!-- run rtab-->
   <group ns="rtabmap">
+    <!-- Use RGBD synchronization -->
+    <!-- Here is a general example using a standalone nodelet, 
+         but it is recommended to attach this nodelet to nodelet 
+         manager of the camera to avoid topic serialization -->
     <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
       <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
       <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
       <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
       <remap from="rgbd_image" to="rgbd_image"/>
+      <!-- output -->
+      <!-- Should be true for not synchronized camera topics 
+           (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
       <param name="approx_sync" value="false"/>
     </node>
-    
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
       <param name="frame_id" type="string" value="base_link"/>
       <param name="odom_frame_id" value="odom"/>
