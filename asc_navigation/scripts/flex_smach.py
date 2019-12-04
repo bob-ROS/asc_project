@@ -23,6 +23,7 @@ def main():
     sm.userdata.error = None
     sm.userdata.clear_costmap_flag = False
     sm.userdata.error_status = None
+    sm.userdata.planner = 'navfn'
 
     with sm:
         # Goal callback for state WAIT_FOR_GOAL
@@ -46,6 +47,13 @@ def main():
             }
         )
 
+        # example callback
+        def get_path_goal_cb(userdata, goal):
+          if goal.planner == 'navfn':
+            goal.planner = 'other_global_planner'
+          else:
+            goal.planner = 'navfn'
+
         # Get path
         smach.StateMachine.add(
             'GET_PATH',
@@ -53,7 +61,11 @@ def main():
                 '/move_base/get_path',
                 GetPathAction,
                 goal_slots=['target_pose'],
-                result_slots=['path']
+                result_slots=['path'],
+                goal_cb=get_path_goal_cb,
+                input_keys = ["planner"],
+                output_keys = ["planner"]
+                 
             ),
             transitions={
                 'succeeded': 'EXE_PATH',
@@ -64,6 +76,7 @@ def main():
                 'target_pose': 'goal'
             }
         )
+
 
         # Execute path
         smach.StateMachine.add(

@@ -1,3 +1,5 @@
 planners:
   - name: 'navfn'
     type: 'navfn/NavfnROS'
+  - name: 'other_global_planner'
+    type: 'global_planner/GlobalPlanner'

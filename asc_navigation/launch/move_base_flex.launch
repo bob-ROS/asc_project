@@ -19,5 +19,7 @@
     <remap from="cmd_vel" to="/cmd_vel_move"/>
   </node>
   <!-- Something for calling move_base_flex, remember to chmod +x flex_smach.py before using this-->
+<!--
   <node pkg="asc_navigation" type="flex_smach.py" name="move_base_flex_action" output="screen"/>
+-->
 </launch>
