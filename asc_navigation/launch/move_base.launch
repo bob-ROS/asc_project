@@ -11,9 +11,10 @@
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_local.yaml" command="load" ns="local_costmap"/>
-<!--    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/> -->
+    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
+    <!--
     <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap"/>-->
     <param name="planner_frequency" value="1.0"/>
     <param name="planner_patience" value="6.0"/>
     <param name="controller_frequency" value="5.0"/>

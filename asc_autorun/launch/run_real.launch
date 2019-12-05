@@ -37,9 +37,7 @@
     <!-- cmd MUX  -->
     <include file="$(find asc_twist_mux)/launch/twist_mux.launch"> 
     </include>
-  </group>
-
-  
+  </group>  
   
   
   <!-- ZED -->
@@ -145,8 +143,6 @@
   </include>
 </group>
 
-
-
   <!-- Run Cartographer Node -->
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
@@ -159,13 +155,5 @@
     <remap from="odom" to="odometry/filtered" />
     <remap from="points2" to="/os1_cloud_node/points" />
   </node>
-
-
-
-
-
-
-
-
 </launch>
 
