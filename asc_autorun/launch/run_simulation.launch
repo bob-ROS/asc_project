@@ -1,13 +1,18 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="remote" default="false"/>
-  <arg name="cartographer_mode" default="false"/>
-  <arg name="empty_map" default="true"/>
-  <arg name="if_visualize" default="true"/>
-  <arg name="if_visualize_rtabmapviz" default="false"/>
-  <arg name="use_move_base" default="true"/>
-  <arg name="use_mbf" default="false"/>
+  <arg name="remote" default="false"/> <!-- Launch move_base on remote machine -->
+  <arg name="cartographer_mode" default="false"/> <!-- will use rtabmap by default -->
 
+  <!-- Launch gazeboo with an empty map.
+  Will launch /worlds/w1.world from asc_simulation otherwise -->
+  <arg name="empty_map" default="true"/> 
+
+  <arg name="if_visualize" default="true"/> <!-- Launch rviz -->
+  <arg name="if_visualize_rtabmapviz" default="false"/> <!-- Launch rtabmapviz -->
+  <arg name="use_move_base" default="true"/> <!-- Launch move_base (or move_base_flex, if use_mbf is true) -->
+  <arg name="use_mbf" default="false"/> <!-- Launch move_base_flex (use_move_base must also be true) -->
+
+  <!-- Start gazebo -->
   <include file="$(find asc_description)/launch/gazebo.launch">
     <arg name="empty_map" value="$(arg empty_map)"/>
   </include>

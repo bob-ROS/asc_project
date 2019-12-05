@@ -3,21 +3,14 @@
 
 
   <arg name="use_viz" default="false"/>
-  <arg name="use_move_base" default="false"/>
-  <arg name="starting_lidar" default="true"/>
-  <arg name="starting_gps" default="true"/>
+  <arg name="use_move_base" default="false"/> <!-- Should move base be started?-->
+  <arg name="starting_lidar" default="true"/> 
 
   <!-- Zed param  -->
   <arg name="svo_file" default=""/>
   <arg name="zed_node_name" default="zed_node"/>
   <arg name="camera_model" default="zed"/>
   <arg name="publish_urdf" default="false"/>
-  <arg name="zed_namespace" default="zed"/>
-
-
-
-
-
 
 
   <!-- cmd MUX  -->
