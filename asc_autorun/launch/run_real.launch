@@ -3,18 +3,17 @@
 
   <arg name="use_lidar" default="true"/> <!-- currently does not support this being false!-->
   <arg name="use_zed" default="true"/> <!-- currently does not support this being false!-->
-  <arg name="localization_mode" default="false"/>
-  <arg name="use_move_base" default="false"/>
+  <arg name="use_move_base" default="false"/> <!-- Launch move_base -->
 
   <arg name="cartographer_mode" default="false"/> <!-- will use rtabmap by default -->
   
  
-  <!--  Make sure you enable corresponding unit first  -->
+  <!--  Make sure you enable corresponding device first  -->
   <!--  scan_mode 0 - no scan                          -->   
   <!--  scan_mode 1 - scan from ZED                    --> 
   <!--  scan_mode 2 - scan from LiDaR                  --> 
   
-  <arg name="scan_mode" default="2"/>
+  <arg name="scan_mode" default="2"/> <!-- Selects how /scan will be generated -->
   
   
   
