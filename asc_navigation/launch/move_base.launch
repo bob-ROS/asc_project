@@ -4,6 +4,8 @@
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
   <arg name="odom_topic" default="zed/zed_node/odom"/>
+  <arg name="cartographer_mode" default="false"/>
+
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
@@ -11,10 +13,12 @@
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
     <rosparam file="$(find asc_navigation)/config/costmap_local.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap"/>
-    <!--
-    <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap"/>
-    <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap"/>-->
+    <!-- if using rtabmap use different costmap -->
+    <rosparam file="$(find asc_navigation)/config/costmap_global_laser.yaml" command="load" ns="global_costmap" unless="$(arg cartographer_mode)"/>
+    <!-- if using cartographer use different costmap -->
+    <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
+    <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
+
     <param name="planner_frequency" value="1.0"/>
     <param name="planner_patience" value="6.0"/>
     <param name="controller_frequency" value="5.0"/>
