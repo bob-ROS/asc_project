@@ -263,7 +263,7 @@
   </link> 
 
   <joint name="base_to_camera" type="fixed">
-    <origin xyz="0.149 0 0.49" rpy="0 0 0"/>
+    <origin xyz="0.149 0 0.49" rpy="0 -0.1 0"/> <!-- tune pitch here -->
     <parent link="base_link"/>
     <child link="zed_camera_center"/>
   </joint>
