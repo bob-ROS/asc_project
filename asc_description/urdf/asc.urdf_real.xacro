@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+  name="asc">
+
+  <xacro:arg name="simulation" default="true" />
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <!--<robotParam>/robot_description</robotParam> -->
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>false</legacyModeNS>
+    </plugin>
+  </gazebo>
+  <xacro:include filename="macro_link.urdf.xacro"/>
+  <xacro:include filename="macro_wheel.urdf.xacro"/>
+
+  <xacro:property name="wheel_length" value="0.032"/>
+  <xacro:property name="wheel_radius" value="0.1"/>
+  <xacro:property name="wheel_parent" value="frame_link"/>
+
+
+  <link name="base_link"/>
+  <joint name="base_link_to_frame" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="frame_link"/>
+  </joint>
+
+  <link name="frame_link">
+    <inertial>
+      <origin xyz="-0.191135074026536 0.00147037627768998 -0.144166350352701" rpy="0 0 0"/>
+      <mass value="20.0"/>
+      <inertia ixx="0.830289508168532" ixy="-7.44170925374484E-07" ixz="-0.168031775231281" iyy="1.89493024064907" iyz="3.6787232173372E-07" izz="1.80540947379668"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://asc_description/meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.866666666666667 0.866666666666667 0.890196078431372 1"/>
+      </material>
+    </visual>
+  </link>
+
+
+  <gazebo>
+    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>50.0</updateRate>
+      <bodyName>os1_imu</bodyName>
+      <topicName>imu/data</topicName>
+      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+      <headingDrift>0.005</headingDrift>
+      <headingGaussianNoise>0.005</headingGaussianNoise>
+    </plugin>
+
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>40</updateRate>
+      <bodyName>base_link</bodyName>
+      <frameId>base_link</frameId>
+      <topicName>navsat/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+  <!--    <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude> -->
+      <drift>0.0001 0.0001 0.0001</drift>
+    </plugin>
+  </gazebo>
+
+  <!-- add camera -->
+  <gazebo reference="zed_camera_center">
+    <sensor type="depth" name="openni_camera_camera">
+      <always_on>1</always_on>
+      <visualize>true</visualize>
+      <camera>
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>25.0</far>
+        </clip>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+        <baseline>0.2</baseline>
+        <alwaysOn>true</alwaysOn>
+        <!-- Keep this zero, update_rate in the parent <sensor> tag
+            will control the frame rate. -->
+        <updateRate>0.0</updateRate>
+        <cameraName>camera_ir</cameraName>
+        <imageTopicName>/zed/zed_node/rgb/image_rect_color</imageTopicName>
+        <cameraInfoTopicName>/zed/zed_node/rgb/camera_info </cameraInfoTopicName>
+        <depthImageTopicName>/zed/zed_node/depth/depth_registered</depthImageTopicName>
+        <depthImageCameraInfoTopicName>/zed/zed_node/depth/image_raw/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>/zed/zed_node/point_cloud/cloud_registered </pointCloudTopicName>
+        <frameName>camera_link_pc</frameName>
+        <pointCloudCutoff>0.4</pointCloudCutoff>
+        <!-- does nothing it seems
+        <pointCloudCutoffMax>20.0</pointCloudCutoffMax> -->
+        <distortionK1>0</distortionK1>
+        <distortionK2>0</distortionK2>
+        <distortionK3>0</distortionK3>
+        <distortionT1>0</distortionT1>
+        <distortionT2>0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0</hackBaseline>
+      </plugin>
+    </sensor>
+
+
+
+    <sensor type="multicamera" name="stereo_camera">
+      <update_rate>30.0</update_rate>
+      <camera name="left">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <camera name="right">
+        <pose>0 -0.07 0 0 0 0</pose>
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>multisense_sl/camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera_link_pc</frameName>
+        <!--<rightFrameName>right_camera_optical_frame</rightFrameName>-->
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <!-- Add LiDAR -->
+
+  <xacro:if value="${'$(arg simulation)' == 'true'}"> 
+    <!-- Add LiDAR for simulation, pretend it is the os1 LiDAR-->
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <VLP-16 parent="base_link" name="velodyne" topic="/os1_cloud_node/points" hz="10" samples="440" gpu="false">
+      <origin xyz="0.063 0 0.53" rpy="0 0 0"/>
+    </VLP-16>
+    <!-- connect the os1_sensor to share reference for simulated imu and real imu-->
+    <link name="os1_imu"/>
+        <joint name="base_to_os1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="velodyne"/>
+      <child link="os1_imu"/>
+    </joint>
+  </xacro:if>
+  <xacro:if value="${'$(arg simulation)' == 'false'}"> 
+    <!-- Add LiDAR for real -->
+    <link name="os1_sensor"/>
+    <joint name="base_to_os1" type="fixed">
+      <origin xyz="0.063 0 0.53" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="os1_sensor"/>
+    </joint>
+  </xacro:if>
+   
+  <link name="zed_camera_center">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://asc_description/meshes/ZED/ZED.stl"/>
+      </geometry>
+      <material name="light_grey">
+        <color rgba="0.8 0.8 0.8 0.8"/>
+      </material>
+    </visual>
+  </link> 
+
+  <joint name="base_to_camera" type="fixed">
+    <origin xyz="0.149 0 0.49" rpy="0 -0.1 0"/> <!-- tune pitch here -->
+    <parent link="base_link"/>
+    <child link="zed_camera_center"/>
+  </joint>
+  <link name="camera_link_pc"/>
+  <joint name="camera_to_pc" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+    <parent link="zed_camera_center"/>
+    <child link="camera_link_pc"/>
+  </joint>
+  
+  <!-- Left Camera -->
+  <joint name="zed_left_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_left_camera_frame"/>
+    <origin xyz="0 0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_left_camera_frame"/>
+  <joint name="zed_left_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_left_camera_frame"/>
+    <child link="zed_left_camera_optical_frame"/>
+  </joint>
+  <link name="zed_left_camera_optical_frame"/>
+  <!-- Right Camera -->
+  <joint name="zed_right_camera_joint" type="fixed">
+    <parent link="zed_camera_center"/>
+    <child link="zed_right_camera_frame"/>
+    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+  </joint>
+  <link name="zed_right_camera_frame"/>
+  <joint name="zed_right_camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+    <parent link="zed_right_camera_frame"/>
+    <child link="zed_right_camera_optical_frame"/>
+  </joint>
+  <link name="zed_right_camera_optical_frame"/>
+</robot>
