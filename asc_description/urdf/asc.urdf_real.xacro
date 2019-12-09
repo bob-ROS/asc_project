@@ -44,54 +44,6 @@
     </visual>
   </link>
 
-  <xacro:asc_wheel_front wheel_prefix="right"
-  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
-    <origin
-      xyz="0.35635 -0.23074 0.27672"
-      rpy="0.29046 -0.12882 -1.6092" />
-    <origin
-      xyz="0.024 0.023741 -0.18704"
-      rpy="0.13981 0.28531 1.6105" />
-    <axis
-      xyz="5.3677E-05 1 0.00055924" />
-  </xacro:asc_wheel_front>
-
-  <xacro:asc_wheel_front wheel_prefix="left"
-  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
-    <origin
-      xyz="0.35635 0.22966 0.274"
-      rpy="0.28907 0.00024223 -1.5707" />
-    <origin
-      xyz="-0.05 0.023546 -0.17951"
-      rpy="1.5963E-05 0.28907 1.5707" />
-    <axis
-      xyz="5.3677E-05 -1 0.00055924" />
-  </xacro:asc_wheel_front>
-
-  <xacro:asc_wheel_rear wheel_prefix="right"
-  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
-  <origin
-  xyz="-0.48012 -0.29752 0.27"
-  rpy="0.0 0.0 0.0" />
-    <origin
-      xyz="0.0 0.0 -0.16"
-      rpy="0 0 0" />
-    <axis
-      xyz="0 1 0" />
-  </xacro:asc_wheel_rear>
-
-  <xacro:asc_wheel_rear wheel_prefix="left"
-  link_parent="${wheel_parent}" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}" >
-  <origin
-  xyz="-0.48012 0.29752 0.27"
-  rpy="0.0 0.0 0.0" />
-      <origin
-      xyz="0.0 0.0 -0.16"
-      rpy="0 0 0" />
-    <axis
-      xyz="0 1 0" />
-  </xacro:asc_wheel_rear>
-
 
   <gazebo>
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
