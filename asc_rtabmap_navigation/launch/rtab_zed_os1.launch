@@ -75,7 +75,6 @@
       <param name="RGBD/ProximityMaxGraphDepth"    type="string" value="0"/>
       <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="1"/>
       <param name="RGBD/AngularUpdate"             type="string" value="0.05"/>
-      <param name="RGBD/LinearUpdate"              type="string" value="0.05"/-->
       <param name="Mem/NotLinkedNodesKept"         type="string" value="false"/>
       <param name="Mem/STMSize"                    type="string" value="30"/>
 
@@ -86,6 +85,8 @@
       <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
       <param name="Grid/RayTracing"                type="string" value="true"/>
       <param name="Grid/3D"                        type="string" value="false"/>
+      <param name="Grid/MaxObstacleHeight"         type="string" value="2.0"/>
+
 
       <!-- ICP parameters -->
       <param name="Icp/VoxelSize"                  type="string" value="0.2"/>
