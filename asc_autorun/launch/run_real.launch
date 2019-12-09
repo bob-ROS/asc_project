@@ -4,7 +4,7 @@
   <arg name="use_lidar" default="true"/> <!-- currently does not support this being false!-->
   <arg name="use_zed" default="true"/> <!-- currently does not support this being false!-->
   <arg name="use_move_base" default="false"/> <!-- Launch move_base -->
-
+  <arg name="remote_move_base" default="false"/> <!-- Launch move_base -->
   <arg name="cartographer_mode" default="false"/> <!-- will use rtabmap by default -->
   
  
@@ -31,8 +31,11 @@
     </node>
     
     <!-- MoveBase -->
-    <include file="$(find asc_navigation)/launch/move_base.launch" if="$(arg use_move_base)"/>
-    
+    <group if="$(arg use_move_base)">
+      <include file="$(find asc_navigation)/launch/move_base.launch" unless="$(arg remote_move_base)"/>
+      <include file="$(find asc_remotelaunch)/launch/remote_move_base.launch" if="$(arg remote_move_base)"/>
+
+    </group>
     <!-- cmd MUX  -->
     <include file="$(find asc_twist_mux)/launch/twist_mux.launch"> 
     </include>

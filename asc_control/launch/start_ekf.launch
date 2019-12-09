@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="sim" default="false"/> <!-- Is the ekf running in simulation? -->
   <!-- Start EKF for localization -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
+    <rosparam command="load" file="$(find asc_control)/config/localization.yaml" unless="$(arg sim)"/>
+    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml" if="$(arg sim)"/>
   </node> 
 </launch>
 
