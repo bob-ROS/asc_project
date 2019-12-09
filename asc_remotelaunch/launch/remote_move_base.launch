@@ -6,7 +6,7 @@
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
   <arg name="odom_topic" default="zed/zed_node/odom"/>
-  <node machine="abb" pkg="move_base" type="move_base" respawn="false" name="move_base">
+  <node machine="nuc" pkg="move_base" type="move_base" respawn="false" name="move_base">
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
     <rosparam file="$(find asc_navigation)/config/teb_local_planner_params.yaml" command="load"/>

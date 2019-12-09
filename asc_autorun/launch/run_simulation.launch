@@ -52,9 +52,9 @@
 
   </group>
    <!-- start EKF etc-->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
-  </node>   
+   <include file="$(find asc_control)/launch/start_ekf.launch">
+      <arg name="sim" value="true"/>
+   </include>
   
 </launch>
 
