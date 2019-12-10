@@ -4,7 +4,7 @@ resolution: 0.4
 robot_base_frame: base_link
 obstacle_range: 20.0
 raytrace_range: 21.0
-transform_tolerance: 0.5
+transform_tolerance: 2.0
 
 obstacle_layer:
     observation_sources: laser
