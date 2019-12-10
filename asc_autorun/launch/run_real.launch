@@ -29,6 +29,8 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
       <remap from="/joint_states" to="/joint_states"/>
     </node>
+
+    <node name="wakeup" pkg="asc_startup" type="wakeup" output="screen"/>
     
     <!-- MoveBase -->
     <group if="$(arg use_move_base)">
