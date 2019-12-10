@@ -79,7 +79,7 @@
       <param name="Mem/STMSize"                    type="string" value="30"/>
 
       <param name="Reg/Strategy"                   type="string" value="1"/>
-      <param name="Grid/CellSize"                  type="string" value="0.1"/>
+      <param name="Grid/CellSize"                  type="string" value="0.2"/>
       <param name="Grid/RangeMax"                  type="string" value="20"/>
       <param name="Grid/ClusterRadius"             type="string" value="1"/>
       <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
