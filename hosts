@@ -1,0 +1,8 @@
+# Add this to /etc/hosts to get hostname working
+172.16.1.110	NUC
+172.16.1.101	ABB
+172.16.1.102	OS1
+172.16.1.103	TX2
+172.16.1.69	BOB
+172.16.1.140	RIO
+172.16.1.153	RI2
