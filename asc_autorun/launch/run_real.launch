@@ -38,10 +38,8 @@
       <include file="$(find asc_remotelaunch)/launch/remote_move_base.launch" if="$(arg remote_move_base)"/>
     </group>    
     <!-- cmd MUX  -->
-
-    <!--
     <include file="$(find asc_twist_mux)/launch/twist_mux.launch"> 
-    </include>-->
+    </include>
   </group>  
   
   <!-- ZED -->
