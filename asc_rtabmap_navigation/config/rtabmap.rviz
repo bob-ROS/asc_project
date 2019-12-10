@@ -152,6 +152,14 @@ Visualization Manager:
           Value: true
         zed_camera_center:
           Value: true
+        zed_left_camera_frame:
+          Value: true
+        zed_left_camera_optical_frame:
+          Value: true
+        zed_right_camera_frame:
+          Value: true
+        zed_right_camera_optical_frame:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -183,6 +191,12 @@ Visualization Manager:
               zed_camera_center:
                 camera_link_pc:
                   {}
+                zed_left_camera_frame:
+                  zed_left_camera_optical_frame:
+                    {}
+                zed_right_camera_frame:
+                  zed_right_camera_optical_frame:
+                    {}
       Update Interval: 0
       Value: true
     - Class: rviz/Image
@@ -344,6 +358,22 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        zed_left_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        zed_left_camera_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        zed_right_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        zed_right_camera_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -408,9 +438,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 999999
+      Max Intensity: 0.000711134518
       Min Color: 0; 0; 0
-      Min Intensity: 999999
+      Min Intensity: 6.72623263e-44
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
@@ -490,18 +520,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.895285845
-        Y: 2.19376636
-        Z: 1.48918486
+        X: 1.23515046
+        Y: 6.92175865
+        Z: 2.43624091
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.604795218
+      Pitch: 0.979795218
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 5.75826597
+      Yaw: 5.90326691
     Saved: ~
 Window Geometry:
   Displays:

@@ -11,22 +11,35 @@ frequency: 50
 #roll˙,pitch˙,yaw˙,
 #X¨,Y¨,Z¨)
 
-odom0: four_wheel_carlike_steering_controller/odom
+
+<rosparam param="odom0_config">
+
+<rosparam param="imu0_config">
+
+
+
+
+
+
+
+
+
+odom0: /zed/zed_node/odom
 odom0_config: [false, false, false,
-               false, false, false,
-               true, true, false,
-               false, false, true,
-               false, false, false]
+              false, false, false,
+              true, true, false,
+              false, false, true,
+              false, false, false]
 odom0_differential: false
 odom0_queue_size: 10
 
-#imu0: imu/data
-#imu0_config: [false, false, false,
-#              true, true, true,
-#              false, false, false,
-#              true, true, true,
-#              false, false, false]
-#imu0_differential: false
-#imu0_queue_size: 10
-#imu0_remove_gravitational_acceleration: true
+imu0: /os1_node/imu_packets
+imu0_config: [false, false, false,
+              false, false, true,
+              false, false, false,
+              false, false, true,
+              true, false, false]
+imu0_differential: false
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true
 

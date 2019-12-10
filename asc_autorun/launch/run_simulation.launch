@@ -30,7 +30,7 @@
 
   <!-- Run Cartographer Node -->
   <group if="$(arg cartographer_mode)">
-    <include file="$(find asc_cartographer_navigation)/launch/cartographer_sim.launch"/> 
+    <include file="$(find asc_cartographer_navigation)/launch/cartographer_demo.launch"/> 
   </group>
 
   <include file="$(find asc_navigation)/launch/pc_to_laser.launch"/>
@@ -38,19 +38,23 @@
 
   <group if="$(arg use_move_base)">
       <group if="$(arg use_mbf)">
-          <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base_flex.launch" />
+          <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base_flex.launch"> 
+             <arg name="cartographer_mode" value="$(arg cartographer_mode)"/>
+          </include>
       </group>
       <group unless="$(arg use_mbf)">
-          <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch" />
+          <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch"> 
+             <arg name="cartographer_mode" value="$(arg cartographer_mode)"/>
+          </include>
           <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
       </group>
 
 
   </group>
    <!-- start EKF etc-->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find asc_control)/config/localization_sim.yaml"/>
-  </node>   
+   <include file="$(find asc_control)/launch/start_ekf.launch">
+      <arg name="sim" value="true"/>
+   </include>
   
 </launch>
 
