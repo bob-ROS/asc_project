@@ -55,7 +55,7 @@
       <!-- param name="Mem/LaserScanRadius"        type="string" value="0"/ -->
 
       <param name="Reg/Strategy"                   type="string" value="1"/>
-      <param name="Grid/CellSize"                  type="string" value="0.1"/>
+      <param name="Grid/CellSize"                  type="string" value="0.25"/>
       <param name="Grid/RangeMax"                  type="string" value="20"/>
       <param name="Grid/ClusterRadius"             type="string" value="1"/>
       <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
@@ -73,6 +73,7 @@
       <param name="Icp/PM"                         type="string" value="true"/>
       <param name="Icp/PMOutlierRatio"             type="string" value="0.7"/>
       <param name="Icp/CorrespondenceRatio"        type="string" value="0.4"/>
+      <param name="Grid/FromDepth"                 type="string" value="false"/>
     </node>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/config/rtabmap.rviz" output="screen" if="$(arg visualize)"/>
     <!-- Construct and voxelize the point cloud (for fast visualization in rviz) -->
