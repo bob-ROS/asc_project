@@ -18,11 +18,11 @@
     <!-- if using cartographer use different costmap -->
     <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
     <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
-
-    <param name="planner_frequency" value="1.0"/>
-    <param name="planner_patience" value="10.0"/>
+    <param name="clearing_rotation_allowed" type="bool" value="false"/>
+    <param name="planner_frequency" value="2.0"/>
+    <param name="planner_patience" value="3.0"/>
     <param name="controller_frequency" value="3.0"/>
-    <param name="controller_patience" value="3.0"/>
+    <param name="controller_patience" value="7.0"/>
     <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
     <remap from="cmd_vel" to="/cmd_vel_move"/>
   </node>
