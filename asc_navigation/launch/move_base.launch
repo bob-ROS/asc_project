@@ -19,6 +19,8 @@
     <rosparam file="$(find asc_navigation)/config/outdoor_settings_example.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
     <rosparam file="$(find asc_navigation)/config/costmap_global_stvl.yaml" command="load" ns="global_costmap" if="$(arg cartographer_mode)"/>
 
+    <rosparam file="$(find asc_navigation)/config/recovery_planner.yaml" command="load"/>
+
     <param name="planner_frequency" value="1.0"/>
     <param name="planner_patience" value="10.0"/>
     <param name="controller_frequency" value="3.0"/>

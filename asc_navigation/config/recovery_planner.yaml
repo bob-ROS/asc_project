@@ -1,0 +1,29 @@
+recovery_behaviour_enabled: true
+
+recovery_behaviors:
+  - {name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}
+  - {name: stepback_and_steerturn_recovery, type: stepback_and_steerturn_recovery/StepBackAndSteerTurnRecovery}
+  - {name: aggressive_reset, type: clear_costmap_recovery/ClearCostmapRecovery}
+
+# Step_back behavior
+# 1. Step back for space to turn with steering.
+# 2. Scan the navigation stack's costmaps at the point where the robot stepped back.
+# 3. Detect the direction to the nearest obstacle and attempts to turn in the opposite direction. 
+step_back_and_max_steer_recovery:
+# True if you want to invoke just once turn. 
+    only_single_steering: false
+    trial_times         : 3
+    obstacle_patience   : 0.3 # Tolerance distance [m] to obstacle． 
+    obstacle_check_frequency: 5.0 # Frequency to check obstacle during recovery. 
+    sim_angle_resolution: 0.1 # Resolution of angle [rad] to check costmap for obstacle detection. Decrease this parameter to reduce the number of access to costmap for computation efficiency. 
+    simulation_frequency    : 5 # Forward simulation frequency on obstacle detection. Decrease this parameter to reduce the number of access to costmap for computation efficiency. 
+    linear_vel_back     : -0.6 # Velocity of stepback [m/s]. 
+    step_back_length    : 1.0
+    step_back_timeout   : 15.0
+    linear_vel_steer    : 0.5
+    angular_speed_steer : 0.5
+    turn_angle          : 4.25
+    steering_timeout    : 15.0
+    linear_vel_forward  : 0.3
+    step_forward_length : 1.0
+    step_forward_timeout: 15.0
