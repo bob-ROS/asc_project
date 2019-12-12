@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="use_lidar" default="true"/> <!-- currently does not support this being false!-->
+  <arg name="use_zed" default="false"/> <!-- currently does not support this being false!-->
+  <arg name="use_move_base" default="false"/> <!-- Launch move_base -->
+  <arg name="remote_move_base" default="false"/> <!-- Launch move_base -->
+  <arg name="cartographer_mode" default="false"/> <!-- will use rtabmap by default -->
+  <arg name="use_gps" default="false"/>
+ 
+  <!--  Make sure you enable corresponding device first  -->
+  <!--  scan_mode 0 - no scan                          -->   
+  <!--  scan_mode 1 - scan from ZED                    --> 
+  <!--  scan_mode 2 - scan from LiDaR                  --> 
+  
+  <arg name="scan_mode" default="2"/> <!-- Selects how /scan will be generated -->
+  
+  
+  
+
+  <!-- General -->
+  <group>
+    <!-- TF publisher-->
+
+    <param name="/robot_description" command="$(find xacro)/xacro '$(find asc_description)/urdf/asc.urdf_real.xacro'
+      --inorder 
+      simulation:=false
+    "/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/joint_states"/>
+    </node>
+
+    <node name="wakeup" pkg="asc_startup" type="wakeup" output="screen"/>
+    
+    <!-- MoveBase -->
+    <group if="$(arg use_move_base)">
+      <include file="$(find asc_navigation)/launch/move_base.launch" unless="$(arg remote_move_base)"/>
+      <include file="$(find asc_remotelaunch)/launch/remote_move_base.launch" if="$(arg remote_move_base)"/>
+    </group>    
+    <!-- cmd MUX  -->
+    <include file="$(find asc_twist_mux)/launch/twist_mux.launch"> 
+    </include>
+  </group>  
+  
+  <!-- ZED -->
+  <group if="$(arg use_zed)">
+    <group ns="zed">
+    <!-- ZED Wrapper Node-->
+    <include file="$(find zed_wrapper)/launch/zed_camera.launch">
+      <arg name="svo_file" value=""/>
+      <arg name="node_name" value="zed_node"/>
+      <arg name="camera_model" value="zed"/>
+      <arg name="publish_urdf" value="false"/>
+    </include>
+  </group>
+  <!-- 'zed' or 'zedm' -->
+    <!-- scan converting from ZED -->
+    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" if="$(eval arg('scan_mode') == 1)">
+      <remap from="image"       to="/zed/zed_node/depth/depth_registered"/>
+      <remap from="camera_info" to="/zed/zed_node/depth/camera_info"/>
+      <remap from="scan"        to="/scan"/>
+      <param name="range_max" type="double" value="4"/>
+      <param name="scan_height" type="int" value="10"/>
+      <param name="output_frame_id" type="str" value="zed_camera_center"/>
+    </node>
+
+  </group>
+  
+  
+   <!-- GPS position os1_sensor-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_gps" args="0 0 0.2 -1.57 0 0 base_link gps" output="screen"/>
+
+  <!--  GPS  -->
+  <arg name="port" default="/dev/ttyUSB0" />
+  <arg name="baud" default="4800" />
+  <arg name="frame_id" default="gps" />
+  <arg name="use_GNSS_time" default="False" />
+  <arg name="time_ref_source" default="gps" />
+  <arg name="useRMC" default="False" />
+
+  <node name="nmea_serial_driver_node" pkg="nmea_navsat_driver" type="nmea_serial_driver" output="screen" if="$(arg use_gps)">
+    <param name="port" value="$(arg port)"/>
+    <param name="baud" value="$(arg baud)" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="use_GNSS_time" value="$(arg use_GNSS_time)" />
+    <param name="time_ref_source" value="$(arg time_ref_source)" />
+    <param name="useRMC" value="$(arg useRMC)" />
+  </node>
+  
+  
+  <!--        Lidar					-->
+  <group if="$(arg use_lidar)">
+
+    <!-- LiDaR start  -->
+    <include file="$(find ouster_ros)/os1.launch">
+      <arg name="os1_hostname" value="os1"/>
+      <arg name="os1_udp_dest" value="172.16.1.103"/>
+      <arg name="lidar_mode" value="1024x10"/>
+      <arg name="viz" value="false"/>
+    </include>
+    
+
+
+    <!-- scan converting from lidar, required for obstacle layer -->
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen" if="$(eval arg('scan_mode') == 2)">
+      <remap from="scan" to="/scan"/> 
+      <remap from="cloud_in" to="os1_cloud_node/points"/>
+      <rosparam>
+                target_frame: base_link # Leave empty to output scan in the pointcloud frame
+                tolerance: 1.0
+                min_height: 0.2
+                max_height: 1.0
+
+                angle_min: -3.14 # -30.0*M_PI/180.0
+                angle_max: 3.14 # 30.0*M_PI/180.0
+                angle_increment: 0.005 # M_PI/360.0
+                scan_time: 0.3333
+                range_min: 0.8
+                range_max: 100.0
+                use_inf: true
+
+                # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+                # 0 : Detect number of cores
+                # 1 : Single threaded
+                # 2-&gt;inf : Parallelism level
+                concurrency_level: 1
+      </rosparam>
+    </node>
+    
+    <!-- lidar position os1_sensor-->
+    <!-- this has been moved to the urdf
+    <node pkg="tf2_ros" type="static_transform_publisher" name="link_to_lidar" args="0 0 0.2 -1.57 0 0 base_link os1_sensor" output="screen"/>
+    -->
+  </group>
+
+
+<group unless="$(arg cartographer_mode)"> 
+  <!-- launch rtab + zed node-->
+  <!--<include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">-->
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed_os1.launch">
+  <!--
+    <arg name="odom_node" default="/zed/zed_node/odom"/>
+    <arg name="visualize" value="false"          />
+    <arg name="use_scan" value="false"/>
+    <arg name="use_scan_cloud" value="true"/>
+  -->
+
+
+  </include>
+</group>
+
+  <!-- Run Cartographer Node -->
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory
+              $(find asc_cartographer_navigation)/config
+          -configuration_basename asc.lua"
+      output="screen"
+      if="$(arg cartographer_mode)">
+    <remap from="imu" to="imu/data" />
+    <remap from="odom" to="odometry/filtered" />
+    <remap from="points2" to="/os1_cloud_node/points" />
+  </node>
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+      type="cartographer_occupancy_grid_node" args="-resolution 0.05" if="$(arg cartographer_mode)"/>
+</launch>
+
