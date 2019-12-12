@@ -18,16 +18,17 @@
   <arg name="right_camera_info_topic"  default="/zed/zed_node/right/camera_info"/>
 
   <group ns="rtabmap">
-      <!--
-      <node pkg="nodelet" type="nodelet" name="stereo_sync" args="standalone rtabmap_ros/stereo_sync" output="screen">
-        <remap from="left/image_rect"   to="$(arg left_image_topic)"/>
-        <remap from="right/image_rect"  to="$(arg right_image_topic)"/>
-        <remap from="left/camera_info"  to="$(arg left_camera_info_topic)"/>
-        <remap from="right/camera_info" to="$(arg right_camera_info_topic)"/>
-        <remap from="rgbd_image"      to="rgbd_image"/> 
-        <param name="approx_sync"     type="bool"   value="false"/>
-      </node>-->
 
+    <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
+      <remap from="rgbd_image" to="rgbd_image"/>
+      <!-- output -->
+      <!-- Should be true for not synchronized camera topics 
+           (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
+      <param name="approx_sync" value="false"/>
+    </node>
     <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen">
       <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <param name="frame_id"   type="string" value="$(arg frame_id)"/>
@@ -61,7 +62,7 @@
     </node>
 
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" output="screen" args="-d">
-      <param name="subscribe_rgbd"       type="bool" value="false"/>
+      <param name="subscribe_rgbd"       type="bool" value="true"/>
       <param name="frame_id"             type="string" value="$(arg frame_id)"/>
       <param name="subscribe_depth"      type="bool" value="false"/>
       <param name="subscribe_rgb"        type="bool" value="false"/>
