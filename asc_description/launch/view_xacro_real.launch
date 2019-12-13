@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_lidar" default="true"/>
+  <arg name="use_zed" default="true"/>
+  <arg name="localization_mode" default="false"/>
+  <arg name="use_move_base" default="false"/>
+  <arg name="cartographer_mode" default="false"/>
+  <!--  Make sure you enable corresponding unit first  -->
+  <!--  scan_mode 0 - no scan                          -->
+  <!--  scan_mode 1 - scan from ZED                    -->
+  <!--  scan_mode 2 - scan from LiDaR                  -->
+  <arg name="scan_mode" default="2"/>
+  <!-- General -->
+  <group>
+    <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+    <!-- TF publisher-->
+    <param name="/robot_description" command="$(find xacro)/xacro '$(find asc_description)/urdf/asc.urdf.xacro'       
+    --inorder        
+    simulation:=false"/>
+    <param name="use_gui" value="true"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+  </group>
+</launch>
+
