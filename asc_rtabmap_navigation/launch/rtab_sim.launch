@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="zed_namespace" default="zed"/>
+  <arg name="zed_node_name" default="zed_node"/>
+
+  <arg name="odom_node" default="/odometry/filtered"/>
+
+  <arg name="visualize" default="false"/>
+  <arg name="visualize_rtabmapviz" default="false"/>
+  <arg name="use_scan" default="true"/>
+  <arg name="use_scan_cloud" default="false"/>
+  <!-- run rtab-->
+  <group ns="rtabmap">
+    <!-- Use RGBD synchronization -->
+    <!-- Here is a general example using a standalone nodelet, 
+         but it is recommended to attach this nodelet to nodelet 
+         manager of the camera to avoid topic serialization -->
+    <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
+      <remap from="rgbd_image" to="rgbd_image"/>
+      <!-- output -->
+      <!-- Should be true for not synchronized camera topics 
+           (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
+      <param name="approx_sync" value="false"/>
+    </node>
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+      <param name="frame_id" type="string" value="base_link"/>
+      <param name="odom_frame_id" value="odom"/>
+      <param name="subscribe_depth" type="bool" value="false"/>
+      <param name="subscribe_rgb" type="bool" value="false"/>
+      <param name="subscribe_rgbd" type="bool" value="true"/>
+      <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
+      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
+      <remap from="odom" to="$(arg odom_node)"/>
+      <remap from="scan" to="/scan"/>
+      <remap from="scan_cloud" to="/os1_cloud_node/points"/>
+      <remap from="rgbd_image" to="rgbd_image"/>
+      <param name="queue_size" type="int" value="10"/>
+      <remap from="gps/fix" to="/fix"/>
+      <remap from="grid_map" to="/map"/>
+
+      <param name="Rtabmap/DetectionRate"          type="string" value="1"/>
+      <param name="RGBD/NeighborLinkRefining"      type="string" value="false"/>
+      <!--param name="RGBD/ProximityBySpace"          type="string" value="true"/>
+      <param name="RGBD/ProximityMaxGraphDepth"    type="string" value="0"/>
+      <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="1"/>
+      <param name="RGBD/AngularUpdate"             type="string" value="0.05"/>
+      <param name="RGBD/LinearUpdate"              type="string" value="0.05"/-->
+      <param name="Mem/NotLinkedNodesKept"         type="string" value="false"/>
+      <param name="Mem/STMSize"                    type="string" value="30"/>
+      <!-- param name="Mem/LaserScanVoxelSize"     type="string" value="0.1"/ -->
+      <!-- param name="Mem/LaserScanNormalK"       type="string" value="10"/ -->
+      <!-- param name="Mem/LaserScanRadius"        type="string" value="0"/ -->
+
+      <param name="Reg/Strategy"                   type="string" value="1"/>
+      <param name="Grid/CellSize"                  type="string" value="0.25"/>
+      <param name="Grid/RangeMax"                  type="string" value="20"/>
+      <param name="Grid/ClusterRadius"             type="string" value="1"/>
+      <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
+      <param name="Grid/RayTracing"                type="string" value="true"/>
+      <param name="Grid/3D"                        type="string" value="false"/>
+      <param name="Grid/MaxObstacleHeight"         type="string" value="1.5"/>
+      <!-- ICP parameters -->
+      <param name="Icp/VoxelSize"                  type="string" value="0.2"/>
+      <param name="Icp/PointToPlaneK"              type="string" value="20"/>
+      <param name="Icp/PointToPlaneRadius"         type="string" value="0"/>
+      <param name="Icp/PointToPlane"               type="string" value="false"/>
+      <param name="Icp/Iterations"                 type="string" value="10"/>
+      <param name="Icp/Epsilon"                    type="string" value="0.001"/>
+      <param name="Icp/MaxTranslation"             type="string" value="3"/>
+      <param name="Icp/MaxCorrespondenceDistance"  type="string" value="1"/>
+      <param name="Icp/PM"                         type="string" value="true"/>
+      <param name="Icp/PMOutlierRatio"             type="string" value="0.7"/>
+      <param name="Icp/CorrespondenceRatio"        type="string" value="0.4"/>
+      <param name="Grid/FromDepth"                 type="string" value="false"/>
+    </node>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find asc_rtabmap_navigation)/config/rtabmap.rviz" output="screen" if="$(arg visualize)"/>
+    <!-- Construct and voxelize the point cloud (for fast visualization in rviz) -->
+    <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
+      <remap from="rgbd_image" to="/rtabmap/rgbd_image/compressed"/>
+      <remap from="cloud" to="/rtabmap/cloud_map"/>
+      <param name="queue_size" type="int" value="10"/>
+      <param name="voxel_size" type="double" value="0.01"/>
+    </node>
+    <!-- Visualisation RTAB-Map -->
+    <node pkg="rtabmap_ros" type="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" name="rtabmapviz" output="screen" if="$(arg visualize_rtabmapviz)">
+      <param name="subscribe_depth" type="bool" value="true"/>
+      <param name="subscribe_scan" type="bool" value="$(arg use_scan)"/>
+      <param name="subscribe_scan_cloud" type="bool" value="$(arg use_scan_cloud)"/>
+      <param name="frame_id" type="string" value="base_link"/>
+      <param name="wait_for_transform" type="bool" value="true"/>
+      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
+      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
+      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
+      <remap from="scan" to="/scan"/>
+      <remap from="odom" to="$(arg odom_node)"/>
+    </node>
+  </group>
+</launch>
+

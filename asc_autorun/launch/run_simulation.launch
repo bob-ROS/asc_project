@@ -5,7 +5,7 @@
 
   <!-- Launch gazeboo with an empty map.
   Will launch /worlds/w1.world from asc_simulation otherwise -->
-  <arg name="empty_map" default="true"/> 
+  <arg name="empty_map" default="false"/> 
 
   <arg name="if_visualize" default="true"/> <!-- Launch rviz -->
   <arg name="if_visualize_rtabmapviz" default="false"/> <!-- Launch rtabmapviz -->
@@ -19,7 +19,7 @@
 
   <!-- launch rtab + zed node-->
   <group unless="$(arg cartographer_mode)">
-    <include file="$(find asc_rtabmap_navigation)/launch/rtab_demo_new.launch"> 
+    <include file="$(find asc_rtabmap_navigation)/launch/rtab_sim.launch"> 
       <arg name="odom_node" default="/odometry/filtered"/>
       <arg name="visualize" value="$(arg if_visualize)"/>
       <arg name="visualize_rtabmapviz" value="$(arg if_visualize_rtabmapviz)"/>
