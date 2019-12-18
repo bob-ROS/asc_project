@@ -21,6 +21,7 @@
     <param name="clearing_rotation_allowed" type="bool" value="false"/>
     <param name="planner_frequency" value="2.0"/>
     <param name="planner_patience" value="3.0"/>
+    <rosparam file="$(find asc_navigation)/config/recovery_planner.yaml" command="load"/>
     <param name="controller_frequency" value="3.0"/>
     <param name="controller_patience" value="7.0"/>
     <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>

@@ -19,16 +19,7 @@
 
   <group ns="rtabmap">
 
-    <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
-      <remap from="rgb/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/image_rect_color"/>
-      <remap from="depth/image" to="/$(arg zed_namespace)/$(arg zed_node_name)/depth/depth_registered"/>
-      <remap from="rgb/camera_info" to="/$(arg zed_namespace)/$(arg zed_node_name)/rgb/camera_info"/>
-      <remap from="rgbd_image" to="rgbd_image"/>
-      <!-- output -->
-      <!-- Should be true for not synchronized camera topics 
-           (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
-      <param name="approx_sync" value="false"/>
-    </node>
+
     <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen">
       <remap from="scan_cloud" to="/os1_cloud_node/points"/>
       <param name="frame_id"   type="string" value="$(arg frame_id)"/>
@@ -59,10 +50,11 @@
       <param name="Odom/Strategy"              type="string" value="1"/>
       <param name="OdomF2M/ScanSubtractRadius" type="string" value="0.2"/>
       <param name="OdomF2M/ScanMaxSize"        type="string" value="15000"/>
+      <param name="Reg/Force3DoF"              type="string" value="true"/>
     </node>
 
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" output="screen" args="-d">
-      <param name="subscribe_rgbd"       type="bool" value="true"/>
+      <param name="subscribe_rgbd"       type="bool" value="false"/>
       <param name="frame_id"             type="string" value="$(arg frame_id)"/>
       <param name="subscribe_depth"      type="bool" value="false"/>
       <param name="subscribe_rgb"        type="bool" value="false"/>
@@ -88,7 +80,7 @@
       <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
       <param name="Grid/RayTracing"                type="string" value="true"/>
       <param name="Grid/3D"                        type="string" value="false"/>
-      <param name="Grid/MaxObstacleHeight"         type="string" value="2.0"/>
+      <param name="Grid/MaxObstacleHeight"         type="string" value="1.5"/>
 
 
       <!-- ICP parameters -->

@@ -61,6 +61,7 @@
       <param name="Grid/GroundIsObstacle"          type="string" value="false"/>
       <param name="Grid/RayTracing"                type="string" value="true"/>
       <param name="Grid/3D"                        type="string" value="false"/>
+      <param name="Grid/MaxObstacleHeight"         type="string" value="1.5"/>
       <!-- ICP parameters -->
       <param name="Icp/VoxelSize"                  type="string" value="0.2"/>
       <param name="Icp/PointToPlaneK"              type="string" value="20"/>
