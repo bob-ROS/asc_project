@@ -50,6 +50,7 @@
       <param name="Odom/Strategy"              type="string" value="1"/>
       <param name="OdomF2M/ScanSubtractRadius" type="string" value="0.2"/>
       <param name="OdomF2M/ScanMaxSize"        type="string" value="15000"/>
+      <param name="Reg/Force3DoF"              type="string" value="true"/>
     </node>
 
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" output="screen" args="-d">
