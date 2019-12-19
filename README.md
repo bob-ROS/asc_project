@@ -2,6 +2,7 @@
 Autonomous Solar Car Project from MDH. Contains the entire workspace and possibly in the future submodules.
 
 To clone with submodules: 
+
 `git clone --recurse-submodules https://github.com/bob-ROS/asc_project.git`
 
 for simulation:
