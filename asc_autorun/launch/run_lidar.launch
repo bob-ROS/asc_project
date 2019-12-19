@@ -137,7 +137,7 @@
 <group unless="$(arg cartographer_mode)"> 
   <!-- launch rtab + zed node-->
   <!--<include file="$(find asc_rtabmap_navigation)/launch/rtab_demo.launch">-->
-  <include file="$(find asc_rtabmap_navigation)/launch/rtab_zed_os1.launch">
+  <include file="$(find asc_rtabmap_navigation)/launch/rtab_real_os1.launch">
   <!--
     <arg name="odom_node" default="/zed/zed_node/odom"/>
     <arg name="visualize" value="false"          />
