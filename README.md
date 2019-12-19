@@ -9,6 +9,10 @@ for simulation:
 
 `roslaunch asc_autorun run_simulation.launch`
 
-for running real robot:
+for running real robot with LiDAR only:
 
-`roslaunch asc_autorun run_real.launch use_move_base:=true`
+`roslaunch asc_autorun run_lidar.launch`
+
+for running real robot with ZED + LiDAR
+
+`roslaunch asc_autorun run_real.launch`
