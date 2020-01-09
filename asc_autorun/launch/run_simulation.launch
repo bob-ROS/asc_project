@@ -45,6 +45,7 @@
       <group unless="$(arg use_mbf)">
           <include unless="$(arg remote)" file="$(find asc_navigation)/launch/move_base.launch"> 
              <arg name="cartographer_mode" value="$(arg cartographer_mode)"/>
+             <arg name="odom_topic" value="/odometry/filtered"/>
           </include>
           <include if="$(arg remote)" file="$(find asc_remotelaunch)/launch/remote_move_base.launch" /> 
       </group>

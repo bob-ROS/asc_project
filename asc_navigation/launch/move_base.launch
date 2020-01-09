@@ -3,7 +3,7 @@
   <arg name="no_static_map" default="false"/>
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="teb_local_planner/TebLocalPlannerROS"/>
-  <arg name="odom_topic" default="zed/zed_node/odom"/>
+  <arg name="odom_topic" default="rtabmap/odom"/>
   <arg name="cartographer_mode" default="false"/>
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
