@@ -16,6 +16,7 @@ for the ASC robot.</p>
   <depend>joint_state_publisher</depend>
   <depend>gazebo</depend>
   <depend>velodyne_gazebo_plugins</depend>
+  <depend>hector_gazebo_plugins</depend>
   <export>
     <architecture_independent />
   </export>
