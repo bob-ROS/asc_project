@@ -42,12 +42,9 @@
         link="${wheel_prefix}_steering_link" />
       <child
         link="${wheel_prefix}_wheel_link" />
-      <xacro:insert_block name="wheel_joint_axis"/>
-        
+      <xacro:insert_block name="wheel_joint_axis"/>        
     </joint>
-
-
-
+    
     <transmission name="${wheel_prefix}_wheel_joint_tran">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${wheel_prefix}_wheel_joint">
@@ -119,7 +116,7 @@
       <limit lower="-0.8" upper="0.9" effort="100" velocity="100"/>
       <dynamics damping="1.0"/>
     </joint>
-
+    
   </xacro:macro>
 
   <xacro:macro name="asc_wheel_rear" params="wheel_prefix link_parent wheel_length wheel_radius *steering_joint_pose *wheel_joint_origin *wheel_joint_axis">
@@ -138,9 +135,6 @@
             izz="0.000234021785961031" />
         </inertial>
       </link>
-
-
-
 
     <!-- Add base of wheel macro -->
     <xacro:asc_wheel wheel_prefix="rear_${wheel_prefix}"
